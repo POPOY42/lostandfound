@@ -4,13 +4,13 @@ import bcrypt from "bcrypt";
 const register = async (req, res) => {
 
     try{
-        const {name, surname, studentId, password} = req.body
+        const {name, surname, username, contactNumber, password} = req.body
 
-        const existingUser = await User.findOne({ studentId });
+        const existingUser = await User.findOne({ username });
 
         if (existingUser) {
             return res.status(400).json({
-                message: "Student ID already exists"
+                message: "username already exists"
             });
         }
 
@@ -19,7 +19,8 @@ const register = async (req, res) => {
         const newUser = new User({
                 name,
                 surname,
-                studentId,
+                username,
+                contactNumber,
                 password: hashedPassword
             });
 
@@ -39,13 +40,13 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        const {studentId, password} = req.body;
+        const {username, password} = req.body;
 
-        const user = await User.findOne({studentId});
+        const user = await User.findOne({username});
 
         if(!user){
             return res.status(400).json({
-                message: "Invalid student ID or password"
+                message: "Invalid username or password"
             })
         }
 
@@ -53,7 +54,7 @@ const login = async (req, res) => {
         
         if(!isMatch){
             return res.status(400).json({
-                message :"Invalid student ID or password"
+                message :"Invalid username or password"
             })
         }
 
@@ -63,7 +64,8 @@ const login = async (req, res) => {
                 _id: user._id,
                 name: user.name,
                 surname: user.surname,
-                studentId: user.studentId,
+                username: user.username,
+                contactNumber: user.contactNumber,
                 role: user.role
             }
 
@@ -77,11 +79,9 @@ const login = async (req, res) => {
 }
 
 
-
-
 const getUsers = async (req, res) => {
     try {
-        const users = await User.find({role: "student"});
+        const users = await User.find({role: "resident"});
 
         res.status(200).json(users);
     } 
@@ -91,4 +91,21 @@ const getUsers = async (req, res) => {
         });
     }
 };
+
+
+    const changeUsername = async (req,res) => {
+        try {
+            const {username} = req.body
+
+            
+        } 
+        catch (error) {
+            
+        }
+    }
+
+
+
+
+
 export {register, login, getUsers}

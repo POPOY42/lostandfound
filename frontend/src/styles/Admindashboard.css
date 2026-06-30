@@ -79,7 +79,7 @@
 }
 
 .admin-nav-link:hover {
-  background: #f3f4f6;
+  background: #e3e6eb;
   color: #111827;
 }
 
@@ -247,30 +247,23 @@
 .logout-btn{
     width:100%;
     margin-top:18px;
-
     display:flex;
     align-items:center;
     justify-content:center;
     gap:10px;
-
     padding:12px;
-
     border:none;
     border-radius:12px;
-
-    background:#ef4444;
+    background: #111827;
     color:#fff;
-
-    cursor:pointer;
-
+    cursor:pointer; 
     font-size:14px;
     font-weight:600;
-
     transition:.25s;
 }
 
 .logout-btn:hover{
-    background:#dc2626;
+    background:#332323;
 }
 
 .logout-modal-overlay{
@@ -322,10 +315,8 @@
 }
 
 .logout-modal h2{
-
     margin-bottom:8px;
 }
-
 .logout-modal p{
 
     color:#6B7280;

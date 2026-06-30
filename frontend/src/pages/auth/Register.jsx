@@ -9,7 +9,8 @@ const Register = () => {
     const [registerData, setRegisterData] = useState({
         name: "",
         surname: "",
-        studentId: "",
+        username: "",
+        contactNumber: "",
         password: "",
         confirmPassword: ""
     });
@@ -17,7 +18,8 @@ const Register = () => {
     const [errors, setErrors] = useState({
         name: "",
         surname: "",
-        studentId: "",
+        username: "",
+        contactNumber: "",
         password: "",
         confirmPassword: ""
     });
@@ -31,14 +33,16 @@ const Register = () => {
         const newErrors = {
             name: "",
             surname: "",
-            studentId: "",
+            username: "",
+            contactNumber: "",
             password: "",
             confirmPassword: ""
         };
 
         if (!registerData.name.trim()) newErrors.name = "Name is required";
         if (!registerData.surname.trim()) newErrors.surname = "Surname is required";
-        if (!registerData.studentId.trim()) newErrors.studentId = "Student ID is required";
+        if (!registerData.username.trim()) newErrors.username = "Username is required";
+        if (!registerData.contactNumber.trim()) newErrors.contactNumber = "Contact number is required";
         if (!registerData.password) {
             newErrors.password = "Password is required";
         } else if (registerData.password.length < 8) {
@@ -69,7 +73,7 @@ const Register = () => {
             if(!response.ok){
                 setErrors((prev) =>({
                     ...prev,
-                    studentId: data.message
+                    username: data.message
                 }))
                 return
             }
@@ -135,35 +139,86 @@ const Register = () => {
                         </div>
                     </div>
 
-                    <div className={`register-field ${errors.studentId ? "has-error" : ""}`}>
-                        <label>Student ID</label>
+                    <div className={`register-field ${errors.username ? "has-error" : ""}`}>
+                        <label>Username</label>
+
                         <div className="input-wrap">
-                            <svg className="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <rect x="2" y="4" width="20" height="16" rx="2"/>
-                                <path d="M8 10h8M8 14h4"/>
+                            <svg
+                                className="input-icon"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <circle cx="12" cy="8" r="4" />
+                                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
                             </svg>
+
                             <input
                                 type="text"
-                                placeholder="e.g. 202400001"
-                                value={registerData.studentId}
+                                placeholder="Enter your username"
+                                value={registerData.username}
+                                onChange={handleChange("username")}
+                            />
+                        </div>
+
+                        {errors.username && (
+                            <span className="field-error">
+                                {errors.username}
+                            </span>
+                        )}
+                    </div>
+
+                    <div className={`register-field ${errors.contactNumber ? "has-error" : ""}`}>
+                        <label>Contact Number</label>
+
+                        <div className="input-wrap">
+                            <svg
+                                className="input-icon"
+                                width="16"
+                                height="16"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 3.08 4.18 2 2 0 0 1 5.06 2h3a2 2 0 0 1 2 1.72l.38 2.49a2 2 0 0 1-.57 1.73L8.09 10.91a16 16 0 0 0 5 5l1.97-1.76a2 2 0 0 1 1.73-.57l2.49.38A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+
+                            <input
+                                type="text"
+                                placeholder="09XXXXXXXXX"
+                                maxLength={11}
+                                value={registerData.contactNumber}
                                 onChange={(e) => {
                                     const value = e.target.value;
 
                                     if (/^\d*$/.test(value)) {
                                         setRegisterData((prev) => ({
                                             ...prev,
-                                            studentId: value
+                                            contactNumber: value
                                         }));
 
                                         setErrors((prev) => ({
                                             ...prev,
-                                            studentId: ""
+                                            contactNumber: ""
                                         }));
                                     }
                                 }}
                             />
                         </div>
-                        {errors.studentId && <span className="field-error">{errors.studentId}</span>}
+
+                        {errors.contactNumber && (
+                            <span className="field-error">
+                                {errors.contactNumber}
+                            </span>
+                        )}
                     </div>
 
                     <div className={`register-field ${errors.password ? "has-error" : ""}`}>

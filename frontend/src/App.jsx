@@ -13,6 +13,7 @@ import FoundItems from "./pages/admin/Found-item"
 import ClaimedItems from "./pages/admin/Claimed-item"
 import Users from "./pages/admin/Users"
 import Settings from "./pages/admin/Settings"
+import ClaimRequest from "./pages/admin/Claim-request"
 
 const App = () =>{
     return(
@@ -29,6 +30,7 @@ const App = () =>{
                         <Route path="claimed-items" element={<ClaimedItems />} />
                         <Route path="users" element={<Users />} />
                         <Route path="settings" element={<Settings />} />
+                        <Route path="claim-requests" element={<ClaimRequest />} />
                     </Route>
                     <Route path="/studentDashboard" element={<StudentDashboard/>}></Route>
                 </Routes>
