@@ -47,7 +47,7 @@ const ContactSupport = ({ onClose }) => {
             </div>
             <div className="cs-info-text">
               <span className="cs-info-label">Office</span>
-              <p className="cs-info-value">Student Affairs Office</p>
+              <p className="cs-info-value">Barangay San Rafael, Guagua, Pampanga</p>
             </div>
           </div>
 

@@ -93,19 +93,51 @@ const getUsers = async (req, res) => {
 };
 
 
-    const changeUsername = async (req,res) => {
-        try {
-            const {username} = req.body
+const changeUsername = async (req,res) => {
+    try {
+        const {userId, username} = req.body
 
-            
-        } 
-        catch (error) {
-            
+        if(!username){
+            return res.status(400).json({
+                message: "Username is required"
+            })
         }
+
+        const existingUser = await User.findOne({
+            username,
+            _id: { $ne: userId }
+        });
+
+        if(existingUser){
+            return res.status(400).json({
+                message: "Username already exists"
+            })
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            {username},
+            {new: true}
+        )
+
+        return res.status(200).json({
+        message: "Username updated successfully",
+        user: updatedUser
+    });
+    } 
+    catch (error) {
+        return res.status(500).json({
+            message: error.message
+    }   );
     }
+}
 
 
 
 
 
-export {register, login, getUsers}
+export{register, 
+       login, 
+       getUsers,
+       changeUsername
+}

@@ -11,6 +11,8 @@ const emptyForm = {
     type: "found"
 };
 
+const ITEMS_PER_PAGE = 8;
+
 const statusClass = (status) => {
     if (status === "approved") return "status-pill approved";
     if (status === "rejected") return "status-pill rejected";
@@ -25,6 +27,7 @@ const FoundItems = () => {
     const [imagePreview, setImagePreview] = useState(null);
     const [errors, setErrors] = useState({});
     const [selectedImage, setSelectedImage] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
 
     const handleChange = (field) => (e) => {
         setFormData((prev) => ({ ...prev, [field]: e.target.value }));
@@ -105,6 +108,12 @@ const FoundItems = () => {
         fetchItems();
     }, []);
 
+    // Keep currentPage valid whenever the item list changes size
+    useEffect(() => {
+        const totalPages = Math.max(1, Math.ceil(items.length / ITEMS_PER_PAGE));
+        if (currentPage > totalPages) setCurrentPage(totalPages);
+    }, [items, currentPage]);
+
     const handleApprove = async (id) => {
         try {
             await fetch(`http://localhost:5000/api/item/${id}/approve`, {
@@ -125,6 +134,35 @@ const FoundItems = () => {
         } catch (error) {
             console.error(error);
         }
+    };
+
+    const totalPages = Math.max(1, Math.ceil(items.length / ITEMS_PER_PAGE));
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const paginatedItems = items.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+    const goToPage = (page) => {
+        if (page < 1 || page > totalPages) return;
+        setCurrentPage(page);
+    };
+
+    const getPageNumbers = () => {
+        const pages = [];
+        const delta = 1;
+        const range = [];
+
+        for (let i = 1; i <= totalPages; i++) {
+            if (i === 1 || i === totalPages || (i >= currentPage - delta && i <= currentPage + delta)) {
+                range.push(i);
+            }
+        }
+
+        let prev = 0;
+        for (const i of range) {
+            if (prev && i - prev > 1) pages.push("...");
+            pages.push(i);
+            prev = i;
+        }
+        return pages;
     };
 
     return (
@@ -161,7 +199,7 @@ const FoundItems = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {items.map((item) => (
+                        {paginatedItems.map((item) => (
                             <tr key={item._id}>
                                 <td>
                                     {item.image ? (
@@ -169,9 +207,8 @@ const FoundItems = () => {
                                             src={`http://localhost:5000/${item.image}`}
                                             alt={item.itemName}
                                             className="item-thumb"
-                                            onClick={() =>{
-                                                console.log("clicked");
-                                                setSelectedImage(`http://localhost:5000/${item.image}`)}
+                                            onClick={() =>
+                                                setSelectedImage(`http://localhost:5000/${item.image}`)
                                             }
                                         />
                                     ) : (
@@ -228,6 +265,50 @@ const FoundItems = () => {
                         )}
                     </tbody>
                 </table>
+
+                {items.length > 0 && (
+                    <div className="pagination-bar">
+                        <span className="pagination-info">
+                            Showing {startIndex + 1}–{Math.min(startIndex + ITEMS_PER_PAGE, items.length)} of {items.length}
+                        </span>
+
+                        <div className="pagination-controls">
+                            <button
+                                className="pagination-btn"
+                                onClick={() => goToPage(currentPage - 1)}
+                                disabled={currentPage === 1}
+                            >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <polyline points="15 18 9 12 15 6" />
+                                </svg>
+                            </button>
+
+                            {getPageNumbers().map((page, idx) =>
+                                page === "..." ? (
+                                    <span key={`ellipsis-${idx}`} className="pagination-ellipsis">…</span>
+                                ) : (
+                                    <button
+                                        key={page}
+                                        className={`pagination-page ${page === currentPage ? "active" : ""}`}
+                                        onClick={() => goToPage(page)}
+                                    >
+                                        {page}
+                                    </button>
+                                )
+                            )}
+
+                            <button
+                                className="pagination-btn"
+                                onClick={() => goToPage(currentPage + 1)}
+                                disabled={currentPage === totalPages}
+                            >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <polyline points="9 18 15 12 9 6" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
 
             {isModalOpen && (

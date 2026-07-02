@@ -21,13 +21,46 @@ const ChangeUsernameModal = ({ onClose , currentUsername}) => {
     if (error) setError(validate(val));
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     const err = validate(username);
     if (err) return setError(err);
-    setSuccess(true);
-    setTimeout(() => {
-      onClose?.();
-    }, 1200);
+
+
+    try {
+
+        const user = JSON.parse(localStorage.getItem("user"))
+        
+        console.log(user)
+        const response = await fetch("http://localhost:5000/api/users/username", {
+            method : "PUT",
+            headers : {"Content-Type" : "application/json"},
+            body: JSON.stringify({
+                    userId: user._id,
+                    username
+                })
+        })  
+
+        const data = await response.json()
+
+        if(!response.ok){
+            setError(data.message)
+            return
+        }
+
+        localStorage.setItem(
+            "user",
+            JSON.stringify(data.user)
+        );
+        
+        setSuccess(true);
+        setTimeout(() => {
+            onClose?.();
+        }, 1200);
+    } 
+    catch (error) {
+        console.error(error);
+        setError("Something went wrong.");
+    }
   };
 
   return (

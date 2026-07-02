@@ -11,6 +11,7 @@ const emptyForm = {
     type: "lost"
 };
 
+const ITEMS_PER_PAGE = 8;
 
 const statusClass = (status) => {
     if (status === "approved") return "status-pill approved";
@@ -19,12 +20,10 @@ const statusClass = (status) => {
     return "status-pill pending";
 };
 
-
 const typeClass = (type) => {
     if(type === "found") return "type-pill found";
     return "type-pill lost";
 };
-
 
 const LostItems = () => {
     const [items, setItems] = useState([]);
@@ -33,6 +32,7 @@ const LostItems = () => {
     const [imagePreview, setImagePreview] = useState(null);
     const [errors, setErrors] = useState({});
     const [selectedImage, setSelectedImage] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
 
     const handleChange = (field) => (e) => {
         setFormData((prev) => ({ ...prev, [field]: e.target.value }));
@@ -65,8 +65,6 @@ const LostItems = () => {
         localStorage.getItem("user")
     );
 
-
-
     const handleAddItem = async () => {
         const newErrors = {};
         if (!formData.itemName.trim()) newErrors.itemName = "Item name is required";
@@ -78,7 +76,6 @@ const LostItems = () => {
         setErrors(newErrors);
         if (Object.keys(newErrors).length > 0) return;
 
-        
         try {
             const body = new FormData();
             body.append("itemName", formData.itemName);
@@ -90,7 +87,7 @@ const LostItems = () => {
             body.append("reportedBy", user._id);
             if (formData.image) body.append("image", formData.image);
 
-            const response =  await fetch("http://localhost:5000/api/item", {
+            const response = await fetch("http://localhost:5000/api/item", {
                 method: "POST",
                 body
             });
@@ -104,14 +101,12 @@ const LostItems = () => {
         }
     };
 
-
     const fetchItems = async () => {
         try {
             const response = await fetch("http://localhost:5000/api/item?type=lost")
-
             const data = await response.json()
             setItems(data);
-        } 
+        }
         catch (error) {
             console.error(error)
         }
@@ -121,17 +116,18 @@ const LostItems = () => {
         fetchItems()
     }, []);
 
-
+    // Keep currentPage valid whenever the item list changes size
+    useEffect(() => {
+        const totalPages = Math.max(1, Math.ceil(items.length / ITEMS_PER_PAGE));
+        if (currentPage > totalPages) setCurrentPage(totalPages);
+    }, [items, currentPage]);
 
     const handleApprove = async (id) => {
         try{
             await fetch(
                 `http://localhost:5000/api/item/${id}/approve`,
-                {
-                    method: "PATCH"
-                }
+                { method: "PATCH" }
             );
-
             fetchItems();
         }
         catch(error){
@@ -143,11 +139,8 @@ const LostItems = () => {
         try{
             await fetch(
                 `http://localhost:5000/api/item/${id}/reject`,
-                {
-                    method: "PATCH"
-                }
+                { method: "PATCH" }
             );
-
             fetchItems();
         }
         catch(error){
@@ -155,8 +148,35 @@ const LostItems = () => {
         }
     };
 
+    const totalPages = Math.max(1, Math.ceil(items.length / ITEMS_PER_PAGE));
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const paginatedItems = items.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
+    const goToPage = (page) => {
+        if (page < 1 || page > totalPages) return;
+        setCurrentPage(page);
+    };
 
+    // Builds a compact page list like: 1 2 3 ... 8  or  1 ... 4 5 6 ... 12
+    const getPageNumbers = () => {
+        const pages = [];
+        const delta = 1;
+        const range = [];
+
+        for (let i = 1; i <= totalPages; i++) {
+            if (i === 1 || i === totalPages || (i >= currentPage - delta && i <= currentPage + delta)) {
+                range.push(i);
+            }
+        }
+
+        let prev = 0;
+        for (const i of range) {
+            if (prev && i - prev > 1) pages.push("...");
+            pages.push(i);
+            prev = i;
+        }
+        return pages;
+    };
 
     return (
         <div className="lost-items-page">
@@ -192,7 +212,7 @@ const LostItems = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {items.map((item) => (
+                        {paginatedItems.map((item) => (
                             <tr key={item._id}>
                                 <td>
                                     {item.image ? (
@@ -200,9 +220,8 @@ const LostItems = () => {
                                             src={`http://localhost:5000/${item.image}`}
                                             alt={item.itemName}
                                             className="item-thumb"
-                                            onClick={() =>{
-                                                console.log("clicked");
-                                                setSelectedImage(`http://localhost:5000/${item.image}`)}
+                                            onClick={() =>
+                                                setSelectedImage(`http://localhost:5000/${item.image}`)
                                             }
                                         />
                                     ) : (
@@ -231,7 +250,6 @@ const LostItems = () => {
                                         {item.status}
                                     </span>
                                 </td>
-                                
                                 <td>
                                     <div className="action-buttons">
                                         <button
@@ -261,10 +279,51 @@ const LostItems = () => {
                         )}
                     </tbody>
                 </table>
+
+                {items.length > 0 && (
+                    <div className="pagination-bar">
+                        <span className="pagination-info">
+                            Showing {startIndex + 1}–{Math.min(startIndex + ITEMS_PER_PAGE, items.length)} of {items.length}
+                        </span>
+
+                        <div className="pagination-controls">
+                            <button
+                                className="pagination-btn"
+                                onClick={() => goToPage(currentPage - 1)}
+                                disabled={currentPage === 1}
+                            >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <polyline points="15 18 9 12 15 6" />
+                                </svg>
+                            </button>
+
+                            {getPageNumbers().map((page, idx) =>
+                                page === "..." ? (
+                                    <span key={`ellipsis-${idx}`} className="pagination-ellipsis">…</span>
+                                ) : (
+                                    <button
+                                        key={page}
+                                        className={`pagination-page ${page === currentPage ? "active" : ""}`}
+                                        onClick={() => goToPage(page)}
+                                    >
+                                        {page}
+                                    </button>
+                                )
+                            )}
+
+                            <button
+                                className="pagination-btn"
+                                onClick={() => goToPage(currentPage + 1)}
+                                disabled={currentPage === totalPages}
+                            >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <polyline points="9 18 15 12 9 6" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
-
-
-
 
             {isModalOpen && (
                 <div className="modal-overlay" onClick={closeModal}>

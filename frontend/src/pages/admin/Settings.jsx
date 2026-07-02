@@ -125,7 +125,7 @@ const Settings = () => {
                         <div className="settings-links">
                             <a href="#" className="settings-link">
                                 <HiOutlineUserGroup />
-                                Developers
+                                Developer/s
                             </a>
 
                             <hr className="divider" />
@@ -140,7 +140,7 @@ const Settings = () => {
             </div>
 
             {activeModal === "username" && (
-                <ChangeUsernameModal onClose={closeModal} currentUsername={user.name}/>
+                <ChangeUsernameModal onClose={closeModal} currentUsername={user.username}/>
             )} 
             {activeModal === "password" && (
                 <ChangePasswordModal onClose={closeModal}/>
