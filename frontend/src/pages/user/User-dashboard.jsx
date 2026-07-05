@@ -1,23 +1,20 @@
 import { useState } from "react";
-import { Link, Outlet, useLocation } from "react-router-dom";
-import "../../styles/Admindashboard.css";
-import { useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import "../../styles-user/userdashboard.css";
 
 const navItems = [
   {
-    to: "/adminDashboard",
-    label: "Dashboard",
+    to: "/userDashboard",
+    label: "Home",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="7" height="9" rx="1.5" />
-        <rect x="14" y="3" width="7" height="5" rx="1.5" />
-        <rect x="14" y="12" width="7" height="9" rx="1.5" />
-        <rect x="3" y="16" width="7" height="5" rx="1.5" />
+        <path d="M3 11l9-8 9 8" />
+        <path d="M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10" />
       </svg>
     )
   },
   {
-    to: "/adminDashboard/lost-items",
+    to: "/userDashboard/user-lost-items",
     label: "Lost Items",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -28,7 +25,7 @@ const navItems = [
     )
   },
   {
-    to: "/adminDashboard/found-items",
+    to: "/userDashboard/user-found-items",
     label: "Found Items",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -39,7 +36,7 @@ const navItems = [
     )
   },
   {
-    to: "/adminDashboard/claimed-items",
+    to: "/userDashboard/user-claimed-items",
     label: "Claimed Items",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -48,65 +45,51 @@ const navItems = [
       </svg>
     )
   },
-
   {
-    to: "/adminDashboard/claim-requests",
-    label: "Claim Requests",
-    icon: (
-        <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        >
-        <path d="M9 11l3 3L22 4" />
-        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-        </svg>
-    )
-  },
-  {
-    to: "/adminDashboard/users",
-    label: "Users",
+    to: "/userDashboard/user-my-items",
+    label: "My Items",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-        <circle cx="9" cy="7" r="4" />
-        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        <path d="M20 7h-3V5a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2H4a1 1 0 0 0-1 1v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8a1 1 0 0 0-1-1z" />
+        <path d="M9 5h6v2H9z" />
       </svg>
     )
   },
   {
-    to: "/adminDashboard/settings",
-    label: "Settings",
+    to: "/userDashboard/user-profile",
+    label: "Profile",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="3" />
-        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" />
+        <circle cx="12" cy="8" r="4" />
+        <path d="M4 21c0-4 4-6 8-6s8 2 8 6" />
+      </svg>
+    )
+  },
+  {
+    to: "/userDashboard/user-guide",
+    label: "User Guide",
+    icon: (
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+        <path d="M9 7h7M9 11h7" />
       </svg>
     )
   }
 ];
 
-
-const AdminDashboard = () => {
+const UserDashboard = () => {
     const location = useLocation();
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [showLogoutModal, setShowLogoutModal] = useState(false);
 
     const isActive = (to) => {
-        if (to === "/adminDashboard") return location.pathname === "/adminDashboard";
+        if (to === "/userDashboard") return location.pathname === "/userDashboard";
         return location.pathname.startsWith(to);
     };
 
     const closeSidebar = () => setSidebarOpen(false);
-
     const navigate = useNavigate();
-
     const user = JSON.parse(localStorage.getItem("user"));
 
     const handleLogout = () => {
@@ -122,42 +105,42 @@ const AdminDashboard = () => {
     };
 
   return (
-    <div className="admin-layout">
+    <div className="user-dash-layout">
 
       {/* Mobile topbar */}
-      <div className="admin-topbar">
-        <button className="hamburger-btn" onClick={() => setSidebarOpen(true)}>
+      <div className="user-dash-topbar">
+        <button className="user-dash-hamburger-btn" onClick={() => setSidebarOpen(true)}>
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <line x1="3" y1="6" x2="21" y2="6" />
             <line x1="3" y1="12" x2="21" y2="12" />
             <line x1="3" y1="18" x2="21" y2="18" />
           </svg>
         </button>
-        <div className="admin-brand-text-mobile">
+        <div className="user-dash-brand-text-mobile">
           <h1>Title</h1>
-          <span>ADMIN PANEL</span>
+          <span>USER PANEL</span>
         </div>
       </div>
 
       {/* Overlay */}
       {sidebarOpen && (
-        <div className="sidebar-overlay" onClick={closeSidebar} />
+        <div className="user-dash-sidebar-overlay" onClick={closeSidebar} />
       )}
 
       {/* Sidebar */}
-        <aside className={`admin-sidebar ${sidebarOpen ? "open" : ""}`}>
-            <div className="admin-brand">
-            <div className="admin-brand-icon">
+        <aside className={`user-dash-sidebar ${sidebarOpen ? "open" : ""}`}>
+            <div className="user-dash-brand">
+            <div className="user-dash-brand-icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 2L3 7v6c0 5 4 9 9 9s9-4 9-9V7l-9-5z" />
                 </svg>
             </div>
-            <div className="admin-brand-text">
+            <div className="user-dash-brand-text">
                 <h1>Title</h1>
-                <span>ADMIN PANEL</span>
+                <span>USER PANEL</span>
             </div>
             {/* Close button (mobile) */}
-            <button className="sidebar-close-btn" onClick={closeSidebar}>
+            <button className="user-dash-sidebar-close-btn" onClick={closeSidebar}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
@@ -165,35 +148,35 @@ const AdminDashboard = () => {
             </button>
             </div>
 
-            <nav className="admin-nav">
+            <nav className="user-dash-nav">
             {navItems.map((item) => (
                 <Link
                     key={item.to}
                     to={item.to}
-                    className={`admin-nav-link ${isActive(item.to) ? "active" : ""}`}
+                    className={`user-dash-nav-link ${isActive(item.to) ? "active" : ""}`}
                     onClick={closeSidebar}
                 >
-                    <span className="admin-nav-icon">{item.icon}</span>
+                    <span className="user-dash-nav-icon">{item.icon}</span>
                     {item.label}
                 </Link>
             ))}
             </nav>
 
-            <div className="admin-sidebar-footer">
-                <div className="admin-user">
-                        <div className="admin-user-avatar">
+            <div className="user-dash-sidebar-footer">
+                <div className="user-dash-user">
+                        <div className="user-dash-user-avatar">
                             {user?.name?.charAt(0).toUpperCase()}
                         </div>
 
-                        <div className="admin-user-info">
-                            <span className="admin-user-name">
+                        <div className="user-dash-user-info">
+                            <span className="user-dash-user-name">
                                 {user?.name}
                             </span>
-                            <span className="admin-user-role">Administrator</span>
+                            <span className="user-dash-user-role">User</span>
                         </div>
                 </div>
 
-                <button className="logout-btn" onClick={() => setShowLogoutModal(true)}>
+                <button className="user-dash-logout-btn" onClick={() => setShowLogoutModal(true)}>
                     <svg
                         width="18"
                         height="18"
@@ -214,37 +197,37 @@ const AdminDashboard = () => {
             </div>
         </aside>
 
-        <main className="admin-main">
+        <main className="user-dash-main">
             <Outlet />
         </main>
 
 
         {showLogoutModal && (
             <div
-                className="logout-modal-overlay"
+                className="user-dash-logout-modal-overlay"
                 onClick={() => setShowLogoutModal(false)}
             >
                 <div
-                    className="l    ogout-modal"
+                    className="user-dash-logout-modal"
                     onClick={(e) => e.stopPropagation()}
                 >
 
-                    <div className="logout-icon">
+                    <div className="user-dash-logout-icon">
                         🚪
                     </div>
                     <h2>Logout</h2>
                     <p>
                         Are you sure you want to logout?
                     </p>
-                    <div className="logout-actions">
+                    <div className="user-dash-logout-actions">
                         <button
-                            className="cancel-btn"
+                            className="user-dash-cancel-btn"
                             onClick={() => setShowLogoutModal(false)}
                         >
                             Cancel
                         </button>
                         <button
-                            className="confirm-btn"
+                            className="user-dash-confirm-btn"
                             onClick={handleLogout}
                         >
                             Logout
@@ -257,4 +240,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default UserDashboard;

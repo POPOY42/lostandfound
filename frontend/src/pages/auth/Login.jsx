@@ -81,7 +81,7 @@ const Login = () => {
             if (data.user.role === "admin") {
                 navigate("/adminDashboard");
             } else if (data.user.role === "resident") {
-                navigate("/studentDashboard");
+                navigate("/userDashboard");
             }
 
         } catch (error) {

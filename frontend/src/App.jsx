@@ -1,42 +1,62 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
 
-import Login from "./pages/auth/Login"
-import Register from "./pages/auth/Register"
+import AdminDashboard from "./pages/admin/Admin-dashboard";
+import UserDashboard from "./pages/user/User-dashboard";
 
-import AdminDashboard from "./pages/admin/Admin-dashboard"
-import StudentDashboard from "./pages/student/Student-dashboard"
+import Dashboard from "./pages/admin/Dashboard";
+import LostItems from "./pages/admin/Lost-item";
+import FoundItems from "./pages/admin/Found-item";
+import ClaimedItems from "./pages/admin/Claimed-item";
+import Users from "./pages/admin/Users";
+import Settings from "./pages/admin/Settings";
+import ClaimRequest from "./pages/admin/Claim-request";
 
-import Dashboard from "./pages/admin/Dashboard"
-import LostItems from "./pages/admin/Lost-item"
-import FoundItems from "./pages/admin/Found-item"
-import ClaimedItems from "./pages/admin/Claimed-item"
-import Users from "./pages/admin/Users"
-import Settings from "./pages/admin/Settings"
-import ClaimRequest from "./pages/admin/Claim-request"
+// User pages
+import Home from "./pages/user/Home"
+import UserFoundItems from "./pages/user/Found-item";
+import UserLostItems from "./pages/user/Lost-item";
+import UserClaimedItems from "./pages/user/Claimed-item";
+import UserMyItems from "./pages/user/My-items";
+import UserProfile from "./pages/user/Profile";
+import UserUserGuide from "./pages/user/User-guide";
 
-const App = () =>{
-    return(
-        <div>
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<Login/>}></Route>
-                    <Route path="/register" element={<Register/>}></Route>
+const App = () => {
+  return (
+    <div>
+      <BrowserRouter>
+        <Routes>
+            {/* Auth */}
+            <Route path="/" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
-                    <Route path="/adminDashboard" element={<AdminDashboard/>}>
-                        <Route index element={<Dashboard />} />
-                        <Route path="lost-items" element={<LostItems />} />
-                        <Route path="found-items" element={<FoundItems />} />
-                        <Route path="claimed-items" element={<ClaimedItems />} />
-                        <Route path="users" element={<Users />} />
-                        <Route path="settings" element={<Settings />} />
-                        <Route path="claim-requests" element={<ClaimRequest />} />
-                    </Route>
-                    <Route path="/studentDashboard" element={<StudentDashboard/>}></Route>
-                </Routes>
-            </BrowserRouter>
-        </div>
-    )
-}
+            {/* Admin Dashboard */}
+            <Route path="/adminDashboard" element={<AdminDashboard />}>
+                <Route index element={<Dashboard />} />
+                <Route path="lost-items" element={<LostItems />} />
+                <Route path="found-items" element={<FoundItems />} />
+                <Route path="claimed-items" element={<ClaimedItems />} />
+                <Route path="users" element={<Users />} />
+                <Route path="settings" element={<Settings />} />
+                <Route path="claim-requests" element={<ClaimRequest />} />
+            </Route>
 
-export default App
+            {/* User Dashboard */}
+            <Route path="/userDashboard" element={<UserDashboard />}>
+                <Route index element={<Home />} />
+                <Route path="user-lost-items" element={<UserLostItems />} />
+                <Route path="user-found-items" element={<UserFoundItems />} />
+                <Route path="user-claimed-items" element={<UserClaimedItems />} />
+                <Route path="user-my-items" element={<UserMyItems />} />
+                <Route path="user-profile" element={<UserProfile />} />
+                <Route path="user-guide" element={<UserUserGuide />} />
+            </Route>
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
+};
+
+export default App;
