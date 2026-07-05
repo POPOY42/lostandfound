@@ -81,7 +81,7 @@ const login = async (req, res) => {
 
 const getUsers = async (req, res) => {
     try {
-        const users = await User.find({role: "resident"});
+        const users = await User.find({role: "resident"}).sort({createdAt: -1})
 
         res.status(200).json(users);
     } 

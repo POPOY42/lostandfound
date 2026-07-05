@@ -34,28 +34,31 @@ const createItem = async (req,res) =>{
 }
 
 
-
 const getItems = async (req, res) => {
     try {
-        const { type } = req.query;
+        const { type, status } = req.query;
 
         const filter = {};
 
         if (type) {
-            filter.type = type; 
+            filter.type = type;
+        }
+
+        if (status) {
+            filter.status = status;
         }
 
         const items = await Item.find(filter)
+            .sort({createdAt: -1})
             .populate("reportedBy", "name surname");
 
         return res.status(200).json(items);
-    }
-    catch(error){
+    } catch (error) {
         return res.status(500).json({
             message: error.message
         });
     }
-}
+};
 
 
 

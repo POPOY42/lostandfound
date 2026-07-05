@@ -74,8 +74,8 @@ const Users = () => {
             <table>
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Student ID</th>
+                  <th>Full Name</th>
+                  <th>Phone Number</th>
                   <th>Date Joined</th>
                 </tr>
               </thead>
@@ -84,18 +84,19 @@ const Users = () => {
                 {currentUsers.map((user) => (
                   <tr key={user._id}>
                     <td>
-                      <div className="name-cell">
-                        <div className="user-info">
-                          <span>
-                            {user.name} {user.surname}
-                          </span>
+                        <div className="name-cell">
+                            <div className="user-info">
+                                <span>
+                                    {user.name.charAt(0).toUpperCase() + user.name.slice(1)}{" "}
+                                    {user.surname.charAt(0).toUpperCase() + user.surname.slice(1)}
+                                </span>
+                            </div>
                         </div>
-                      </div>
                     </td>
 
                     <td>
                       <span className="student-id">
-                        {user.studentId}
+                        {user.contactNumber}
                       </span>
                     </td>
 
