@@ -16,6 +16,7 @@ app.use(express.json());
 import userRouter from "./routes/User.routes.js"
 import itemRouter from "./routes/Item.routes.js"
 import dashboardRoutes from "./routes/dashboard.routes.js";
+import claimRoutes from "./routes/Claim.routes.js";
 
 app.use(
     "/uploads",
@@ -26,6 +27,7 @@ app.use(
 app.use("/api/users", userRouter)
 app.use("/api/item", itemRouter)
 app.use("/api/dashboard", dashboardRoutes);
+app.use("/api/claim-request", claimRoutes);
 
 
 
