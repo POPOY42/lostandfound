@@ -127,15 +127,15 @@ const AdminDashboard = () => {
       {/* Mobile topbar */}
       <div className="admin-topbar">
         <button className="hamburger-btn" onClick={() => setSidebarOpen(true)}>
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <line x1="3" y1="6" x2="21" y2="6" />
             <line x1="3" y1="12" x2="21" y2="12" />
             <line x1="3" y1="18" x2="21" y2="18" />
-          </svg>
+            </svg>
         </button>
         <div className="admin-brand-text-mobile">
-          <h1>Title</h1>
-          <span>ADMIN PANEL</span>
+            <h1>Title</h1>
+            <span>ADMIN PANEL</span>
         </div>
       </div>
 

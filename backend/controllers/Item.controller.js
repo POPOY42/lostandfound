@@ -46,6 +46,8 @@ const getItems = async (req, res) => {
 
         if (status) {
             filter.status = status;
+        } else {
+            filter.status = { $ne: "claimed" };
         }
 
         const items = await Item.find(filter)
@@ -120,10 +122,28 @@ const approveItem = async (req, res) => {
 }
 
 
+const getClaimedItems = async (req,res) =>{
+    try {
 
+        const claimedItems = await Item.find({
+            status: "claimed"
+        })
+        .populate("reportedBy", "name surname")
+        .sort({updatedAt: -1})
+
+        return res.status(200).json(claimedItems)
+
+    }
+     catch (error) {
+        return res.status(500).json({
+            message: error.message
+        })
+    }
+}
 
 export {createItem,
         getItems,
         rejectItem,
         approveItem,
+        getClaimedItems
 }

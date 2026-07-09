@@ -53,4 +53,66 @@ const createClaimRequest = async (req, res) => {
     }
 };
 
-export { createClaimRequest };
+
+const getClaimRequests = async (req, res) => {
+    try {
+        const requests = await Claim.find()
+            .populate("item")
+            .populate("claimant");
+
+        return res.status(200).json(requests);
+    } catch (error) {
+        console.log(error);
+
+        return res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
+
+
+const approveClaimRequest = async (req,res) =>{
+
+    try {
+        const { id } = req.params;
+
+        const claim = await Claim.findByIdAndUpdate(
+            id,
+            {status: "approved"},
+            {new : true}
+        )
+
+        if(!claim){
+        return res.status(404).json({
+                message: "Item not found!"
+        })
+        }
+
+        const item = await Item.findByIdAndUpdate(
+            claim.item,{
+                status: "claimed"
+            },
+            {
+                new: true
+            }
+        )
+
+        return res.status(200).json({
+            message: "Your claim approved",
+            claim,
+            messageToTheUser: "Pls come to the barangay to claim your item"
+        })
+    } 
+    catch (error) {
+        return res.status(500).json({
+            message: error.message
+        });
+    }
+}
+
+export { createClaimRequest,
+         getClaimRequests,
+         approveClaimRequest
+         
+};

@@ -7,12 +7,10 @@ const getDashboardStats = async (req, res) => {
 
         const lost = await Item.countDocuments({
             type: "lost",
-            status: "approved"
         });
 
         const found = await Item.countDocuments({
             type: "found",
-            status: "approved"
         });
 
         const claimed = await Item.countDocuments({

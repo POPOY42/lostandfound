@@ -3,7 +3,8 @@ import multer from "multer"
 import {createItem,
         getItems,
         rejectItem,
-        approveItem
+        approveItem,
+        getClaimedItems
         
 } from "../controllers/Item.controller.js"
 
@@ -21,5 +22,7 @@ router.post("/", upload.single("image"), createItem);
 
 router.patch("/:id/reject", rejectItem)
 router.patch("/:id/approve", approveItem)
+
+router.get("/claimed", getClaimedItems)
 
 export default router
