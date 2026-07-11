@@ -199,7 +199,6 @@ const updateItem = async (req, res) => {
             item.image = req.file.path;
         }
 
-        // Kapag approved na tapos inedit, ibalik sa pending
         if (item.status === "approved") {
             item.status = "pending";
         }

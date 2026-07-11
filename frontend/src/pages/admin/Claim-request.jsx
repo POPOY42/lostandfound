@@ -31,7 +31,6 @@ const ClaimRequest = () => {
         fetchClaims();
     }, []);
 
-    // Keep currentPage valid whenever the claim list changes size
     useEffect(() => {
         const totalPages = Math.max(1, Math.ceil(claims.length / ITEMS_PER_PAGE));
         if (currentPage > totalPages) setCurrentPage(totalPages);
@@ -167,7 +166,7 @@ const ClaimRequest = () => {
                                     {claim.item?.itemName || "Untitled item"}
                                 </td>
                                 <td className="claimant-name">
-                                    {claim.item.type}
+                                    {claim.item?.type || "—"}
                                 </td>
                                 <td className="claimant-name">
                                     {claim.claimant

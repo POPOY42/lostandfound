@@ -61,6 +61,10 @@ const getClaimRequests = async (req, res) => {
             .populate("claimant")
             .sort({createdAt: -1})
 
+        const validRequests = requests.filter(
+            (request) => request.item !== null
+        );
+
         return res.status(200).json(requests);
     } catch (error) {
         console.log(error);
@@ -114,8 +118,35 @@ const approveClaimRequest = async (req,res) =>{
     }
 }
 
+const getMyClaim = async (req, res) => {
+    try {
+        const { claimant } = req.query;
+
+        const claims = await Claim.find({
+            claimant,
+            status: "approved"
+        })
+            .populate("item")
+            .sort({ createdAt: -1 });
+
+        const items = claims
+            .filter(claim => claim.item)
+            .map(claim => ({
+                ...claim.item.toObject(),
+                claimedDate: claim.reviewedAt || claim.updatedAt
+            }));
+
+        return res.status(200).json(items);
+
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
 export { createClaimRequest,
          getClaimRequests,
-         approveClaimRequest
-         
+         approveClaimRequest,
+         getMyClaim
 };

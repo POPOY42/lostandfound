@@ -1,0 +1,403 @@
+/* ── Page ── */
+.myclaimed-page {
+    padding: 2rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.myclaimed-header {
+    margin-bottom: 20px;
+}
+
+.myclaimed-header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111111;
+    margin: 0 0 4px;
+}
+
+.myclaimed-header p {
+    font-size: 13px;
+    color: #888888;
+    margin: 0;
+}
+
+/* ── Toolbar: type tabs + search ── */
+.myclaimed-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+}
+
+.myclaimed-tabs {
+    display: flex;
+    gap: 8px;
+    background: #f4f3fc;
+    padding: 6px;
+    border-radius: 12px;
+    width: fit-content;
+}
+
+.myclaimed-tab-btn {
+    border: none;
+    background: transparent;
+    color: #6b6b76;
+    padding: 9px 18px;
+    border-radius: 9px;
+    font-size: 13.5px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+}
+
+.myclaimed-tab-btn:hover {
+    color: #534ab7;
+}
+
+.myclaimed-tab-btn.active {
+    background: #534ab7;
+    color: #ffffff;
+}
+
+.myclaimed-search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 280px;
+    padding: 11px 16px;
+    background: #ffffff;
+    border: 1px solid #e0dff5;
+    border-radius: 12px;
+}
+
+.myclaimed-search-box svg {
+    font-size: 18px;
+    color: #9a97c2;
+    flex-shrink: 0;
+}
+
+.myclaimed-search-box input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    color: #111111;
+    background: transparent;
+}
+
+/* ── Date filter row ── */
+.myclaimed-date-filters {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.myclaimed-date-btn {
+    border: 1px solid #e0dff5;
+    background: #ffffff;
+    color: #6b6b76;
+    padding: 7px 14px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    white-space: nowrap;
+}
+
+.myclaimed-date-btn:hover {
+    background: #f4f3fc;
+    border-color: #b9b3ea;
+}
+
+.myclaimed-date-btn.active {
+    background: #eef2ff;
+    border-color: #534ab7;
+    color: #534ab7;
+}
+
+/* ── Table ── */
+.myclaimed-table-wrap {
+    background: #ffffff;
+    border: 0.5px solid rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.myclaimed-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 14px;
+}
+
+.myclaimed-table thead {
+    background: #f9f8ff;
+}
+
+.myclaimed-table th {
+    padding: 16px 22px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #9a9aa6;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid #efeefb;
+}
+
+.myclaimed-table td {
+    padding: 16px 22px;
+    border-top: 1px solid #f4f3fc;
+    vertical-align: middle;
+}
+
+.myclaimed-table tbody tr:hover {
+    background: #fbfaff;
+}
+
+.myclaimed-empty-cell {
+    text-align: center;
+    color: #aaaaaa;
+    padding: 48px 20px;
+}
+
+/* Column 1: picture + title/type/location/date */
+.myclaimed-item-cell {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.myclaimed-item-thumb {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid #ece9fb;
+    flex-shrink: 0;
+    display: block;
+}
+
+.myclaimed-item-thumb-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f4f3fc;
+    color: #c2c0e0;
+}
+
+.myclaimed-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.myclaimed-item-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111111;
+}
+
+.myclaimed-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.myclaimed-item-location {
+    font-size: 12.5px;
+    color: #6b6b76;
+}
+
+.myclaimed-item-date {
+    font-size: 12px;
+    color: #9a9aa6;
+}
+
+.myclaimed-type-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.myclaimed-type-pill.lost {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.myclaimed-type-pill.found {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+/* Column 2: claimed date */
+.myclaimed-date-cell {
+    color: #475569;
+    font-size: 13.5px;
+    white-space: nowrap;
+}
+
+/* Column 3: status badge (check + "Claimed" / "Successfully returned") */
+.myclaimed-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #ecfdf5;
+    color: #059669;
+    padding: 8px 16px;
+    border-radius: 12px;
+}
+
+.myclaimed-status-badge svg {
+    flex-shrink: 0;
+}
+
+.myclaimed-status-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.25;
+}
+
+.myclaimed-status-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #059669;
+}
+
+.myclaimed-status-subtitle {
+    font-size: 11px;
+    font-weight: 500;
+    color: #059669;
+    opacity: 0.85;
+}
+
+/* ── Pagination ── */
+.myclaimed-pagination-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 22px;
+    border-top: 1px solid #f4f3fc;
+    flex-wrap: wrap;
+}
+
+.myclaimed-pagination-info {
+    font-size: 13px;
+    color: #9a9aa6;
+    white-space: nowrap;
+}
+
+.myclaimed-pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.myclaimed-pagination-btn,
+.myclaimed-pagination-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    height: 34px;
+    padding: 0 6px;
+    border-radius: 9px;
+    border: 1px solid #e0dff5;
+    background: #fff;
+    color: #555566;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.myclaimed-pagination-btn:hover:not(:disabled),
+.myclaimed-pagination-page:hover {
+    background: #f4f3fc;
+    border-color: #b9b3ea;
+    color: #534ab7;
+}
+
+.myclaimed-pagination-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.myclaimed-pagination-page.active {
+    background: #534ab7;
+    border-color: #534ab7;
+    color: #fff;
+}
+
+.myclaimed-pagination-ellipsis {
+    width: 24px;
+    text-align: center;
+    color: #c2c0d6;
+    font-size: 13px;
+    user-select: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+    .myclaimed-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .myclaimed-search-box {
+        width: 100%;
+    }
+
+    .myclaimed-tabs {
+        width: 100%;
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 640px) {
+    .myclaimed-page {
+        padding: 1.25rem;
+    }
+
+    .myclaimed-date-filters {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+    }
+
+    .myclaimed-item-cell {
+        gap: 10px;
+    }
+
+    .myclaimed-table th,
+    .myclaimed-table td {
+        padding: 12px 14px;
+    }
+
+    .myclaimed-status-badge {
+        padding: 6px 10px;
+    }
+
+    .myclaimed-pagination-bar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .myclaimed-pagination-controls {
+        width: 100%;
+        justify-content: center;
+    }
+}
