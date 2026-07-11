@@ -47,8 +47,18 @@ const itemSchema = new mongoose.Schema({
         ref: "User",
         required: true  
     },
-    
 
+    claimedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        default: null
+    },
+
+    claimedAt: {
+        type: Date,
+        default: null
+    },  
+    
     dateLost: {
         type: Date,
         default: Date.now

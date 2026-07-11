@@ -1,0 +1,476 @@
+/* ===== Page layout ===== */
+.found-items-page {
+  padding: 24px;
+  width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.found-item-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.found-item-header h1 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+}
+
+.found-item-header small {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.found-add-item-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #4f46e5;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.found-add-item-btn:hover {
+  background: #4338ca;
+}
+
+/* ===== Table ===== */
+.found-items-table-wrap {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.found-items-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+}
+
+.found-items-table thead {
+  background: #f8fafc;
+  color: #64748b;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+
+.found-items-table th {
+  padding: 12px 20px;
+  font-weight: 500;
+}
+
+.found-items-table td {
+  padding: 12px 20px;
+  border-top: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+.found-items-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.found-empty-row {
+  text-align: center;
+  color: #94a3b8;
+  padding: 40px 20px;
+}
+
+.found-item-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid #e2e8f0;
+  display: block;
+  cursor: pointer;
+}
+
+.found-item-thumb-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #cbd5e1;
+  background: #f8fafc;
+  cursor: default;
+}
+
+.found-item-name-cell {
+  color: #1e293b;
+  font-weight: 500;
+}
+
+.found-item-desc-cell {
+  color: #64748b;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ===== Status pills ===== */
+.found-status-pill {
+  display: inline-flex;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.found-status-pill.pending {
+  background: #fffbeb;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.found-status-pill.approved {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.found-status-pill.rejected {
+  background: #fff1f2;
+  color: #be123c;
+  border: 1px solid #fecdd3;
+}
+
+.found-status-pill.claimed {
+  background: #eef2ff;
+  color: #4338ca;
+  border: 1px solid #c7d2fe;
+}
+
+/* ===== Action buttons ===== */
+.found-action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.found-reject-btn,
+.found-approve-btn {
+  border: none;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.found-reject-btn {
+  background: #fff1f2;
+  color: #e11d48;
+}
+
+.found-reject-btn:hover {
+  background: #ffe4e6;
+}
+
+.found-approve-btn {
+  background: #059669;
+  color: #fff;
+}
+
+.found-approve-btn:hover {
+  background: #047857;
+}
+
+/* ===== Pagination ===== */
+.found-pagination-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-top: 1px solid #f1f5f9;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.found-pagination-info {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.found-pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.found-pagination-btn,
+.found-pagination-page {
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  color: #475569;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.found-pagination-btn:hover:not(:disabled),
+.found-pagination-page:hover {
+  background: #f8fafc;
+}
+
+.found-pagination-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.found-pagination-page.active {
+  background: #4f46e5;
+  border-color: #4f46e5;
+  color: #fff;
+}
+
+.found-pagination-ellipsis {
+  color: #94a3b8;
+  padding: 0 4px;
+}
+
+/* ===== Add/Edit modal ===== */
+.found-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(15, 23, 42, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.found-modal-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.2);
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.found-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.found-modal-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+}
+
+.found-modal-close {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.found-modal-close:hover {
+  color: #475569;
+}
+
+.found-modal-form {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.found-modal-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.found-modal-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.found-modal-field label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #334155;
+}
+
+.found-modal-field input[type="text"],
+.found-modal-field input[type="date"],
+.found-modal-field textarea {
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.found-modal-field input:focus,
+.found-modal-field textarea:focus {
+  outline: none;
+  border-color: #a5b4fc;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+}
+
+.found-modal-field.has-error input,
+.found-modal-field.has-error textarea {
+  border-color: #fda4af;
+}
+
+.found-field-error {
+  font-size: 12px;
+  color: #e11d48;
+}
+
+/* Image upload */
+.found-image-upload-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1.5px dashed #cbd5e1;
+  border-radius: 10px;
+  padding: 24px;
+  color: #64748b;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.found-image-upload-box:hover {
+  border-color: #a5b4fc;
+  background: #f8fafc;
+}
+
+.found-image-preview-wrap {
+  position: relative;
+  width: fit-content;
+}
+
+.found-image-preview {
+  max-height: 140px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  display: block;
+}
+
+.found-image-remove-btn {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: #0f172a;
+  color: #fff;
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.found-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.found-modal-cancel-btn,
+.found-modal-submit-btn {
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.found-modal-cancel-btn {
+  background: #fff;
+  border-color: #e2e8f0;
+  color: #475569;
+}
+
+.found-modal-cancel-btn:hover {
+  background: #f8fafc;
+}
+
+.found-modal-submit-btn {
+  background: #4f46e5;
+  color: #fff;
+}
+
+.found-modal-submit-btn:hover {
+  background: #4338ca;
+}
+
+/* ===== Enlarged image viewer ===== */
+.found-image-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(15, 23, 42, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.found-image-viewer {
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.found-image-modal-content {
+  max-width: 100%;
+  max-height: 90vh;
+  border-radius: 12px;
+  display: block;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 640px) {
+  .found-modal-row {
+    grid-template-columns: 1fr;
+  }
+
+  .found-items-table {
+    font-size: 13px;
+  }
+
+  .found-items-table th,
+  .found-items-table td {
+    padding: 10px 12px;
+  }
+}

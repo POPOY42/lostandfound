@@ -4,9 +4,13 @@ import {createItem,
         getItems,
         rejectItem,
         approveItem,
-        getClaimedItems
+        getClaimedItems,
+        getMyItems,
+        updateItem,
+        deleteItem
         
 } from "../controllers/Item.controller.js"
+import { get } from "mongoose";
 
 const router = express.Router()
 
@@ -24,5 +28,11 @@ router.patch("/:id/reject", rejectItem)
 router.patch("/:id/approve", approveItem)
 
 router.get("/claimed", getClaimedItems)
+
+router.get("/myitems", getMyItems)
+
+router.patch("/:id", upload.single("image"), updateItem);
+
+router.delete("/:id", deleteItem)
 
 export default router

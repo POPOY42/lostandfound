@@ -88,13 +88,35 @@ const LostItems = () => {
                 `http://localhost:5000/api/claim-request?claimedBy=${user._id}`
             );
             const data = await response.json();
+
+            if (!Array.isArray(data)) {
+                console.warn("Expected an array from /api/claim-request, got:", data);
+                return;
+            }
+
             const map = {};
-            (data || []).forEach((claim) => {
-                const id =
-                    typeof claim.itemId === "object" ? claim.itemId?._id : claim.itemId;
-                if (!id) return;
-                if (!map[id]) map[id] = claim;
+            data.forEach((claim) => {
+                // The item reference may come back under different names
+                // depending on how the backend populates it. Try each in order.
+                const rawItemRef = claim.itemId ?? claim.item ?? null;
+                const itemId =
+                    typeof rawItemRef === "object" ? rawItemRef?._id : rawItemRef;
+
+                // Some backends may return every claim instead of filtering by
+                // claimedBy - if so, skip claims that aren't the current user's.
+                const rawUserRef = claim.claimedBy ?? claim.claimant ?? null;
+                const claimUserId =
+                    typeof rawUserRef === "object" ? rawUserRef?._id : rawUserRef;
+                if (claimUserId && claimUserId !== user._id) return;
+
+                if (!itemId) {
+                    console.warn("Claim is missing a recognizable item reference:", claim);
+                    return;
+                }
+
+                if (!map[itemId]) map[itemId] = claim;
             });
+
             setMyClaims(map);
         } catch (error) {
             console.error(error);
@@ -149,6 +171,25 @@ const LostItems = () => {
         }
     };
 
+    // Returns the current claim (if any) the logged-in user has on this item
+    const getExistingClaim = (item) => myClaims[item._id];
+
+    // A user cannot open the claim flow again while a claim is pending/approved/claimed
+    const hasActiveClaim = (item) => {
+        const claim = getExistingClaim(item);
+        return !!claim && ["pending", "approved", "claimed"].includes(claim.status);
+    };
+
+    // Entry point for the "Claim" button. Guards against opening the claim
+    // flow twice for the same item while a previous request is still active.
+    const startClaimFlow = (item) => {
+        if (hasActiveClaim(item)) {
+            setClaimError("You already claimed this item. Please wait for the admin to approve your request.");
+            return;
+        }
+        setClaimError("");
+        setItemToClaim(item);
+    };
 
     const proceedToVerification = () => {
         setShowVerificationModal(true);
@@ -171,6 +212,13 @@ const LostItems = () => {
         }
 
         if (!itemToClaim) return;
+
+        // Safety net: if a claim somehow became active while this modal was
+        // open (e.g. submitted from another tab), block the duplicate submit.
+        if (hasActiveClaim(itemToClaim)) {
+            setClaimError("You already claimed this item. Please wait for the admin to approve your request.");
+            return;
+        }
 
         try {
             const response = await fetch(
@@ -195,7 +243,17 @@ const LostItems = () => {
                 return;
             }
 
-            await fetchMyClaims();
+            // Optimistically mark this item as having a pending claim right away,
+            // so the button updates instantly instead of waiting on the next
+            // fetchMyClaims() round trip (this is what allowed double-claiming).
+            const newClaim = data.claim || data;
+            setMyClaims((prev) => ({
+                ...prev,
+                [itemToClaim._id]: newClaim
+            }));
+
+            // Re-sync with the backend in the background to stay accurate.
+            fetchMyClaims();
 
             closeClaimFlow();
 
@@ -269,7 +327,7 @@ const LostItems = () => {
             );
         }
 
-        const claim = myClaims[item._id];
+        const claim = getExistingClaim(item);
 
         if (claim?.status === "pending") {
             return (
@@ -289,14 +347,14 @@ const LostItems = () => {
 
         // No claim yet, or a previous claim was rejected -> allow (re)claiming
         return (
-            <button className={`claim-btn ${variant}`} onClick={() => setItemToClaim(item)}>
+            <button className={`claim-btn ${variant}`} onClick={() => startClaimFlow(item)}>
                 Claim
             </button>
         );
     };
 
     const renderRejectedNote = (item) => {
-        const claim = myClaims[item._id];
+        const claim = getExistingClaim(item);
         if (claim?.status !== "rejected") return null;
         return (
             <div className="claim-rejected-note">
@@ -321,6 +379,12 @@ const LostItems = () => {
                     </button>
                 </div>
             </div>
+
+            {claimError && !itemToClaim && (
+                <div className="claim-error-banner">
+                    {claimError}
+                </div>
+            )}
 
             {items.length === 0 ? (
                 <div className="user-items-empty">No lost items reported yet.</div>

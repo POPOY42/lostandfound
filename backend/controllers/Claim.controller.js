@@ -58,7 +58,8 @@ const getClaimRequests = async (req, res) => {
     try {
         const requests = await Claim.find()
             .populate("item")
-            .populate("claimant");
+            .populate("claimant")
+            .sort({createdAt: -1})
 
         return res.status(200).json(requests);
     } catch (error) {
@@ -90,14 +91,16 @@ const approveClaimRequest = async (req,res) =>{
         }
 
         const item = await Item.findByIdAndUpdate(
-            claim.item,{
-                status: "claimed"
+            claim.item,
+            {
+                status: "claimed",
+                claimedBy: claim.claimant,
+                claimedAt: new Date()
             },
             {
                 new: true
             }
-        )
-
+        );
         return res.status(200).json({
             message: "Your claim approved",
             claim,

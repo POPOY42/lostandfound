@@ -1,0 +1,630 @@
+/* ── Page ── */
+.my-items-page {
+    padding: 2rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.my-items-header {
+    margin-bottom: 20px;
+}
+
+.my-items-header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111111;
+    margin: 0 0 4px;
+}
+
+.my-items-header p {
+    font-size: 13px;
+    color: #888888;
+    margin: 0;
+}
+
+/* ── Sort tabs ── */
+.my-items-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    background: #f4f3fc;
+    padding: 6px;
+    border-radius: 12px;
+    width: fit-content;
+}
+
+.my-tab-btn {
+    border: none;
+    background: transparent;
+    color: #6b6b76;
+    padding: 9px 18px;
+    border-radius: 9px;
+    font-size: 13.5px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+}
+
+.my-tab-btn:hover {
+    color: #534ab7;
+}
+
+.my-tab-btn.active {
+    background: #534ab7;
+    color: #ffffff;
+}
+
+/* ── Table ── */
+.my-items-table-wrap {
+    background: #ffffff;
+    border: 0.5px solid rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.my-items-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 14px;
+}
+
+.my-items-table thead {
+    background: #f9f8ff;
+}
+
+.my-items-table th {
+    padding: 16px 22px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #9a9aa6;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid #efeefb;
+}
+
+.my-items-table td {
+    padding: 16px 22px;
+    border-top: 1px solid #f4f3fc;
+    vertical-align: middle;
+}
+
+.my-items-table tbody tr:hover {
+    background: #fbfaff;
+}
+
+.my-empty-cell {
+    text-align: center;
+    color: #aaaaaa;
+    padding: 48px 20px;
+}
+
+/* Column 1: picture + type/location/date */
+.my-item-cell {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.my-item-thumb {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid #ece9fb;
+    flex-shrink: 0;
+    display: block;
+}
+
+.my-item-thumb-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f4f3fc;
+    color: #c2c0e0;
+}
+
+.my-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.my-item-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111111;
+}
+
+.my-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.my-item-location {
+    font-size: 12.5px;
+    color: #6b6b76;
+}
+
+.my-item-date {
+    font-size: 12px;
+    color: #9a9aa6;
+}
+
+/* Lost / Found type pill */
+.my-type-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.my-type-pill.lost {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.my-type-pill.found {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+/* Column 2: status pill */
+.my-status-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.my-status-pill.pending {
+    background: #fff7ed;
+    color: #ea580c;
+}
+
+.my-status-pill.approved {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.my-status-pill.rejected {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.my-status-pill.claimed {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.my-status-pill.claim-requested {
+    background: #f5f3ff;
+    color: #7c3aed;
+}
+
+/* Column 3: three-dot action button */
+.my-dots-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    border: 1px solid #e0dff5;
+    background: #ffffff;
+    color: #534ab7;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.my-dots-btn:hover {
+    background: #f4f3fc;
+    border-color: #b9b3ea;
+}
+
+/* ── Modal overlay/content (shared by details + edit) ── */
+.my-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 18, 35, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    z-index: 100;
+}
+
+.my-modal-content {
+    background: #ffffff;
+    border-radius: 18px;
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
+    font-family: 'Inter', sans-serif;
+}
+
+.my-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 1.5rem 1.75rem 1rem;
+}
+
+.my-modal-header h2 {
+    font-size: 17px;
+    font-weight: 700;
+    color: #111111;
+    margin: 0 0 8px;
+}
+
+.my-modal-close-btn {
+    background: #f4f3fc;
+    border: none;
+    color: #888888;
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    border-radius: 50%;
+    font-size: 18px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.my-modal-close-btn:hover {
+    background: #eeedfe;
+    color: #534ab7;
+}
+
+/* Details modal body */
+.my-modal-body {
+    padding: 0 1.75rem 1.5rem;
+}
+
+.my-modal-image {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.my-modal-image-empty {
+    background: #f4f3fc;
+}
+
+.my-modal-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.my-modal-field {
+    font-size: 14px;
+    margin: 0;
+    color: #111111;
+}
+
+.my-modal-field .label {
+    color: #888888;
+}
+
+.my-modal-field .value {
+    color: #111111;
+    font-weight: 500;
+}
+
+.my-rejected-note {
+    margin-top: 8px;
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 12.5px;
+    line-height: 1.5;
+}
+
+/* Shown in the details modal when an item can no longer be edited
+   because it has already been claimed. */
+.my-claimed-note {
+    margin-top: 8px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 12.5px;
+    line-height: 1.5;
+}
+
+/* Claimant info box, shown when the item is claimed or has a pending
+   claim request against it. */
+.my-claimant-box {
+    margin-top: 16px;
+    padding: 14px 16px;
+    background: #f9f8ff;
+    border: 1px solid #ece9fb;
+    border-radius: 12px;
+}
+
+.my-claimant-box h3 {
+    font-size: 12px;
+    font-weight: 700;
+    color: #534ab7;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 0 0 10px;
+}
+
+.my-claimant-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.my-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 1.25rem 1.75rem;
+    border-top: 1px solid #f4f3fc;
+}
+
+/* Buttons shared across details / edit / delete */
+.my-btn {
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: background 0.15s, transform 0.1s;
+}
+
+.my-btn:active {
+    transform: scale(0.98);
+}
+
+.my-btn-edit {
+    background: #534ab7;
+    color: #ffffff;
+}
+
+.my-btn-edit:hover {
+    background: #3c3489;
+}
+
+.my-btn-delete {
+    background: #fff;
+    border-color: #fecaca;
+    color: #dc2626;
+}
+
+.my-btn-delete:hover {
+    background: #fef2f2;
+}
+
+.my-btn-cancel {
+    background: #fff;
+    border-color: #e0dff5;
+    color: #555566;
+}
+
+.my-btn-cancel:hover {
+    background: #f4f3fc;
+}
+
+.my-btn-save {
+    background: #534ab7;
+    color: #ffffff;
+}
+
+.my-btn-save:hover {
+    background: #3c3489;
+}
+
+/* ── Edit modal ── */
+.my-edit-modal {
+    max-width: 480px;
+}
+
+.my-edit-warning {
+    margin: 0 1.75rem 1rem;
+    background: #fff7ed;
+    color: #b45309;
+    border: 1px solid #fde68a;
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 12.5px;
+    line-height: 1.5;
+}
+
+.my-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 0 1.75rem 1.5rem;
+}
+
+.my-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.my-form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.my-form-field label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #555555;
+}
+
+.my-form-field input,
+.my-form-field textarea {
+    width: 100%;
+    padding: 9px 12px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid #e0dff5;
+    background: #f9f8ff;
+    color: #111111;
+    box-sizing: border-box;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.my-form-field textarea {
+    resize: vertical;
+}
+
+.my-form-field input:focus,
+.my-form-field textarea:focus {
+    border-color: #7f77dd;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(127, 119, 221, 0.12);
+}
+
+.my-form-field.has-error input,
+.my-form-field.has-error textarea {
+    border-color: #e24b4a;
+    background: #fff8f8;
+}
+
+.my-field-error {
+    font-size: 12px;
+    color: #c0392b;
+}
+
+/* Image upload/preview inside edit modal */
+.my-image-upload-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 1rem;
+    border: 1.5px dashed #d6d4f0;
+    border-radius: 10px;
+    background: #f9f8ff;
+    color: #9a97c2;
+    font-size: 13px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s, color 0.15s;
+}
+
+.my-image-upload-box:hover {
+    border-color: #7f77dd;
+    background: #f4f3fc;
+    color: #534ab7;
+}
+
+.my-image-preview-wrap {
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.my-image-preview {
+    width: 100%;
+    max-height: 160px;
+    object-fit: cover;
+    display: block;
+    border-radius: 10px;
+}
+
+.my-change-image-link {
+    align-self: flex-start;
+    margin-top: 6px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #534ab7;
+    cursor: pointer;
+}
+
+.my-change-image-link:hover {
+    text-decoration: underline;
+}
+
+/* ── Delete confirmation ── */
+.my-confirm-modal {
+    width: 380px;
+    max-width: 100%;
+    background: #fff;
+    border-radius: 18px;
+    padding: 30px;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+}
+
+.my-confirm-modal h2 {
+    font-size: 17px;
+    font-weight: 700;
+    color: #111111;
+    margin: 0 0 8px;
+}
+
+.my-confirm-modal p {
+    font-size: 13.5px;
+    color: #6b6b76;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.my-confirm-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.my-confirm-actions .my-btn {
+    flex: 1;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+    .my-items-page {
+        padding: 1.25rem;
+    }
+
+    .my-items-tabs {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .my-item-cell {
+        gap: 10px;
+    }
+
+    .my-form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .my-items-table th,
+    .my-items-table td {
+        padding: 12px 14px;
+    }
+}

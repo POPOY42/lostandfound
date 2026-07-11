@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import "../../styles/request.css";
+
+const ITEMS_PER_PAGE = 8;
+
 const statusClass = (status) => {
     if (status === "approved") return "status-badge status-approved";
     if (status === "rejected") return "status-badge status-rejected";
@@ -12,6 +15,7 @@ const ClaimRequest = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [showRejectInput, setShowRejectInput] = useState(false);
     const [rejectionReason, setRejectionReason] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
 
     const fetchClaims = async () => {
         try {
@@ -26,6 +30,12 @@ const ClaimRequest = () => {
     useEffect(() => {
         fetchClaims();
     }, []);
+
+    // Keep currentPage valid whenever the claim list changes size
+    useEffect(() => {
+        const totalPages = Math.max(1, Math.ceil(claims.length / ITEMS_PER_PAGE));
+        if (currentPage > totalPages) setCurrentPage(totalPages);
+    }, [claims, currentPage]);
 
     const openDetails = (claim) => {
         setSelectedClaim(claim);
@@ -83,6 +93,36 @@ const ClaimRequest = () => {
         });
     };
 
+    const totalPages = Math.max(1, Math.ceil(claims.length / ITEMS_PER_PAGE));
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const paginatedClaims = claims.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+    const goToPage = (page) => {
+        if (page < 1 || page > totalPages) return;
+        setCurrentPage(page);
+    };
+
+    // Builds a compact page list like: 1 2 3 ... 8  or  1 ... 4 5 6 ... 12
+    const getPageNumbers = () => {
+        const pages = [];
+        const delta = 1;
+        const range = [];
+
+        for (let i = 1; i <= totalPages; i++) {
+            if (i === 1 || i === totalPages || (i >= currentPage - delta && i <= currentPage + delta)) {
+                range.push(i);
+            }
+        }
+
+        let prev = 0;
+        for (const i of range) {
+            if (prev && i - prev > 1) pages.push("...");
+            pages.push(i);
+            prev = i;
+        }
+        return pages;
+    };
+
     return (
         <div className="claim-page">
             <div className="claim-header">
@@ -96,6 +136,7 @@ const ClaimRequest = () => {
                         <tr>
                             <th>Picture</th>
                             <th>Item</th>
+                            <th>Type</th>
                             <th>Claimant</th>
                             <th>Submitted</th>
                             <th>Status</th>
@@ -103,7 +144,7 @@ const ClaimRequest = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {claims.map((claim) => (
+                        {paginatedClaims.map((claim) => (
                             <tr key={claim._id}>
                                 <td>
                                     {claim.item?.image ? (
@@ -126,9 +167,13 @@ const ClaimRequest = () => {
                                     {claim.item?.itemName || "Untitled item"}
                                 </td>
                                 <td className="claimant-name">
+                                    {claim.item.type}
+                                </td>
+                                <td className="claimant-name">
                                     {claim.claimant
-                                        ? `${claim.claimant.name} ${claim.claimant.surname}`
-                                        : "Unknown user"}
+                                        ? `${claim.claimant.name.charAt(0).toUpperCase() + claim.claimant.name.slice(1).toLowerCase()} 
+                                        ${claim.claimant.surname.charAt(0).toUpperCase() + claim.claimant.surname.slice(1).toLowerCase()}`
+                                        : "Unknown User"}
                                 </td>
                                 <td className="submitted-date">{formatDate(claim.createdAt)}</td>
                                 <td>
@@ -146,13 +191,57 @@ const ClaimRequest = () => {
 
                         {claims.length === 0 && (
                             <tr>
-                                <td colSpan={6} className="empty-cell">
+                                <td colSpan={7} className="empty-cell">
                                     No claim requests to show right now.
                                 </td>
                             </tr>
                         )}
                     </tbody>
                 </table>
+
+                {claims.length > 0 && (
+                    <div className="claim-pagination-bar">
+                        <span className="claim-pagination-info">
+                            Showing {startIndex + 1}–{Math.min(startIndex + ITEMS_PER_PAGE, claims.length)} of {claims.length}
+                        </span>
+
+                        <div className="claim-pagination-controls">
+                            <button
+                                className="claim-pagination-btn"
+                                onClick={() => goToPage(currentPage - 1)}
+                                disabled={currentPage === 1}
+                            >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <polyline points="15 18 9 12 15 6" />
+                                </svg>
+                            </button>
+
+                            {getPageNumbers().map((page, idx) =>
+                                page === "..." ? (
+                                    <span key={`ellipsis-${idx}`} className="claim-pagination-ellipsis">…</span>
+                                ) : (
+                                    <button
+                                        key={page}
+                                        className={`claim-pagination-page ${page === currentPage ? "active" : ""}`}
+                                        onClick={() => goToPage(page)}
+                                    >
+                                        {page}
+                                    </button>
+                                )
+                            )}
+
+                            <button
+                                className="claim-pagination-btn"
+                                onClick={() => goToPage(currentPage + 1)}
+                                disabled={currentPage === totalPages}
+                            >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <polyline points="9 18 15 12 9 6" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                )}
             </div>
 
             {isModalOpen && selectedClaim && (
