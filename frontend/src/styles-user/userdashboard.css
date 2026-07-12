@@ -362,7 +362,6 @@
 
 
 
-
 /* -----------------------------LOST ITEMMMMMMMMMMMMMMM--------------------------------*/
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 /* ── Page ── */
@@ -576,98 +575,6 @@
 
 .own-post-btn:hover {
     background: #f3f2fa;
-}
-
-/* ── Pagination ── */
-.user-pagination-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 20px 4px 4px;
-    flex-wrap: wrap;
-}
-
-.user-pagination-info {
-    font-size: 12.5px;
-    color: #9a9aa6;
-    white-space: nowrap;
-}
-
-.user-pagination-controls {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.user-pagination-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 30px;
-    height: 30px;
-    border-radius: 8px;
-    border: 1px solid #e0dff5;
-    background: #ffffff;
-    color: #555566;
-    cursor: pointer;
-    transition: background 0.15s, border-color 0.15s, color 0.15s;
-}
-
-.user-pagination-btn:hover:not(:disabled) {
-    background: #f4f3fc;
-    border-color: #b9b3ea;
-    color: #534ab7;
-}
-
-.user-pagination-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-}
-
-.user-pagination-page {
-    min-width: 30px;
-    height: 30px;
-    padding: 0 6px;
-    border-radius: 8px;
-    border: 1px solid transparent;
-    background: transparent;
-    color: #6b6b76;
-    font-size: 13px;
-    font-weight: 600;
-    font-family: 'Inter', sans-serif;
-    cursor: pointer;
-    transition: background 0.15s, color 0.15s;
-}
-
-.user-pagination-page:hover {
-    background: #f4f3fc;
-    color: #534ab7;
-}
-
-.user-pagination-page.active {
-    background: #534ab7;
-    color: #ffffff;
-}
-
-.user-pagination-ellipsis {
-    width: 24px;
-    text-align: center;
-    color: #c2c0d6;
-    font-size: 13px;
-    user-select: none;
-}
-
-@media (max-width: 600px) {
-    .user-pagination-bar {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .user-pagination-controls {
-        width: 100%;
-        justify-content: center;
-    }
 }
 
 /* ── Responsive grid ── */

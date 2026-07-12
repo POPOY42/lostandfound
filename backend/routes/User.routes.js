@@ -4,7 +4,10 @@ import {register,
         getUsers,
         changeUsername,
         changePhoneNumber,
-        changePassword
+        changePassword,
+        findUser,
+        verifyContact,
+        resetPassword
 } from "../controllers/User.controller.js";
 
 
@@ -20,4 +23,8 @@ router.put("/username", changeUsername)
 router.put("/contact-number", changePhoneNumber)
 
 router.put("/password", changePassword)
+
+router.post("/forgot-password/find-user", findUser);
+router.post("/forgot-password/verify-contact", verifyContact);
+router.post("/forgot-password/reset", resetPassword);
 export default router

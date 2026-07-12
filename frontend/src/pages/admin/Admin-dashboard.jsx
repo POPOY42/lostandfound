@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import "../../styles/Admindashboard.css";
 import { useNavigate } from "react-router-dom";
+import sanRafaelLogo from "../../assets/san rafael logo.jpg"
 
 const navItems = [
   {
@@ -134,7 +135,7 @@ const AdminDashboard = () => {
             </svg>
         </button>
         <div className="admin-brand-text-mobile">
-            <h1>Title</h1>
+            <h1>Barangay San Rafael <br /> Lost and Found</h1>
             <span>ADMIN PANEL</span>
         </div>
       </div>
@@ -148,12 +149,10 @@ const AdminDashboard = () => {
         <aside className={`admin-sidebar ${sidebarOpen ? "open" : ""}`}>
             <div className="admin-brand">
             <div className="admin-brand-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 2L3 7v6c0 5 4 9 9 9s9-4 9-9V7l-9-5z" />
-                </svg>
+                <img src={sanRafaelLogo} alt=""  width={40}/>
             </div>
             <div className="admin-brand-text">
-                <h1>Title</h1>
+                <h1>Barangay San Rafael <br /> Lost and Found</h1>
                 <span>ADMIN PANEL</span>
             </div>
             {/* Close button (mobile) */}

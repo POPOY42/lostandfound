@@ -209,3 +209,274 @@
         padding: 1.75rem 1.25rem;
     }
 }
+
+
+
+
+/* FORGOT PASSWORD ==============================================================*/
+
+/* ── Page ── */
+.forgot-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1.25rem;
+    background: linear-gradient(135deg, #f4f3fc, #ffffff);
+    font-family: 'Inter', sans-serif;
+}
+
+/* ── Card ── */
+.forgot-card {
+    width: 100%;
+    max-width: 420px;
+    background: #ffffff;
+    border: 0.5px solid rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    padding: 2.5rem 2.25rem;
+    box-shadow: 0 12px 40px rgba(83, 74, 183, 0.08);
+}
+
+.forgot-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.forgot-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #f4f3fc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin: 0 auto 16px;
+}
+
+.forgot-header h1 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111111;
+    margin: 0 0 8px;
+}
+
+.forgot-header p {
+    font-size: 13px;
+    color: #888888;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* ── Progress steps ── */
+.forgot-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 28px;
+}
+
+.forgot-progress-step {
+    display: flex;
+    align-items: center;
+}
+
+.forgot-progress-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #f4f3fc;
+    color: #9a97c2;
+    font-size: 12.5px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+}
+
+.forgot-progress-dot.active {
+    background: #534ab7;
+    color: #ffffff;
+}
+
+.forgot-progress-line {
+    width: 32px;
+    height: 2px;
+    background: #ece9fb;
+    margin: 0 4px;
+    transition: background 0.2s;
+}
+
+.forgot-progress-line.active {
+    background: #534ab7;
+}
+
+/* ── Form ── */
+.forgot-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.forgot-field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.forgot-field label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #555555;
+}
+
+.forgot-field input {
+    width: 100%;
+    padding: 11px 14px;
+    font-size: 14px;
+    border-radius: 10px;
+    border: 1px solid #e0dff5;
+    background: #f9f8ff;
+    color: #111111;
+    box-sizing: border-box;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+
+.forgot-field input::placeholder {
+    color: #c0bedd;
+}
+
+.forgot-field input:focus {
+    border-color: #7f77dd;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(127, 119, 221, 0.12);
+}
+
+.forgot-field.has-error input {
+    border-color: #e24b4a;
+    background: #fff8f8;
+}
+
+.forgot-field-error {
+    font-size: 12px;
+    color: #c0392b;
+}
+
+.forgot-error-banner {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* ── Buttons ── */
+.forgot-submit-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #534ab7;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.forgot-submit-btn:hover:not(:disabled) {
+    background: #3c3489;
+}
+
+.forgot-submit-btn:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+.forgot-submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.forgot-back-btn {
+    background: none;
+    border: none;
+    color: #6b6b76;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    padding: 4px;
+    align-self: center;
+}
+
+.forgot-back-btn:hover {
+    color: #534ab7;
+}
+
+/* This is now a <button>, not an <a> - reset all the default button
+   chrome (border, background, inherited padding) so it still looks
+   like a plain text link, and give it full width so text-align:
+   center actually centers it within the card. */
+.forgot-footer-link {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    padding: 0;
+    border: none;
+    background: none;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    color: #6b6b76;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.forgot-footer-link:hover {
+    color: #534ab7;
+}
+
+/* ── Success state ── */
+.forgot-success {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.forgot-success-icon {
+    font-size: 40px;
+    margin-bottom: 4px;
+}
+
+.forgot-success p {
+    font-size: 14px;
+    color: #3a3a45;
+    margin: 0 0 16px;
+}
+
+.forgot-login-link {
+    max-width: 240px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+    .forgot-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .forgot-progress-line {
+        width: 22px;
+    }
+}

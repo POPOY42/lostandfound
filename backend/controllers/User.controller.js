@@ -211,10 +211,123 @@ const changePassword = async (req, res) => {
 };
 
 
+
+const findUser = async (req, res) => {
+    try {
+        const { username } = req.body;
+
+        if (!username) {
+            return res.status(400).json({
+                message: "Username is required"
+            });
+        }
+
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        return res.status(200).json({
+            userId: user._id
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
+
+
+const verifyContact = async (req, res) => {
+    try {
+        const { userId, contactNumber } = req.body;
+
+        if (!contactNumber) {
+            return res.status(400).json({
+                message: "Contact number is required"
+            });
+        }
+
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        if (user.contactNumber !== contactNumber) {
+            return res.status(400).json({
+                message: "Phone number does not match our records."
+            });
+        }
+
+        return res.status(200).json({
+            message: "Verified successfully"
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
+
+const resetPassword = async (req, res) => {
+    try {
+        const { userId, newPassword } = req.body;
+
+        if (!newPassword) {
+            return res.status(400).json({
+                message: "New password is required"
+            });
+        }
+
+        if (newPassword.length < 8) {
+            return res.status(400).json({
+                message: "Password must be at least 8 characters"
+            });
+        }
+
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        user.password = hashedPassword;
+
+        await user.save();
+
+        return res.status(200).json({
+            message: "Password reset successfully"
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
+
 export{register, 
        login, 
        getUsers,
        changeUsername,
        changePhoneNumber,
-       changePassword
+       changePassword,
+       findUser,
+       verifyContact,
+       resetPassword
 }

@@ -13,8 +13,6 @@ const emptyForm = {
     status: "pending"
 };
 
-const ITEMS_PER_PAGE = 9;
-
 const statusClass = (status) => {
     if (status === "approved") return "user-status-pill approved";
     if (status === "rejected") return "user-status-pill rejected";
@@ -30,7 +28,6 @@ const LostItems = () => {
     const [errors, setErrors] = useState({});
     const [selectedImage, setSelectedImage] = useState(null);
     const [selectedItem, setSelectedItem] = useState(null);
-    const [currentPage, setCurrentPage] = useState(1);
 
     const user = JSON.parse(localStorage.getItem("user"));
 
@@ -77,12 +74,6 @@ const LostItems = () => {
         fetchItems();
     }, []);
 
-    // Keep currentPage valid whenever the item list changes size
-    useEffect(() => {
-        const totalPages = Math.max(1, Math.ceil(items.length / ITEMS_PER_PAGE));
-        if (currentPage > totalPages) setCurrentPage(totalPages);
-    }, [items, currentPage]);
-
     const handleAddItem = async () => {
         const newErrors = {};
         if (!formData.itemName.trim()) newErrors.itemName = "Item name is required";
@@ -120,36 +111,6 @@ const LostItems = () => {
         }
     };
 
-    const totalPages = Math.max(1, Math.ceil(items.length / ITEMS_PER_PAGE));
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const paginatedItems = items.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-
-    const goToPage = (page) => {
-        if (page < 1 || page > totalPages) return;
-        setCurrentPage(page);
-    };
-
-    // Builds a compact page list like: 1 2 3 ... 8  or  1 ... 4 5 6 ... 12
-    const getPageNumbers = () => {
-        const pages = [];
-        const delta = 1;
-        const range = [];
-
-        for (let i = 1; i <= totalPages; i++) {
-            if (i === 1 || i === totalPages || (i >= currentPage - delta && i <= currentPage + delta)) {
-                range.push(i);
-            }
-        }
-
-        let prev = 0;
-        for (const i of range) {
-            if (prev && i - prev > 1) pages.push("...");
-            pages.push(i);
-            prev = i;
-        }
-        return pages;
-    };
-
     const formatDate = (dateString) => {
         if (!dateString) return "—";
         return new Date(dateString).toLocaleDateString("en-PH", {
@@ -184,7 +145,7 @@ const LostItems = () => {
                 <div className="user-items-empty">No lost items reported yet.</div>
             ) : (
                 <div className="user-items-grid">
-                    {paginatedItems.map((item) => (
+                    {items.map((item) => (
                         <div className="user-item-card" key={item._id}>
                             <div
                                 className="user-item-card-image-wrap"
@@ -236,50 +197,6 @@ const LostItems = () => {
                             </div>
                         </div>
                     ))}
-                </div>
-            )}
-
-            {items.length > 0 && (
-                <div className="user-pagination-bar">
-                    <span className="user-pagination-info">
-                        Showing {startIndex + 1}–{Math.min(startIndex + ITEMS_PER_PAGE, items.length)} of {items.length}
-                    </span>
-
-                    <div className="user-pagination-controls">
-                        <button
-                            className="user-pagination-btn"
-                            onClick={() => goToPage(currentPage - 1)}
-                            disabled={currentPage === 1}
-                        >
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                <polyline points="15 18 9 12 15 6" />
-                            </svg>
-                        </button>
-
-                        {getPageNumbers().map((page, idx) =>
-                            page === "..." ? (
-                                <span key={`ellipsis-${idx}`} className="user-pagination-ellipsis">…</span>
-                            ) : (
-                                <button
-                                    key={page}
-                                    className={`user-pagination-page ${page === currentPage ? "active" : ""}`}
-                                    onClick={() => goToPage(page)}
-                                >
-                                    {page}
-                                </button>
-                            )
-                        )}
-
-                        <button
-                            className="user-pagination-btn"
-                            onClick={() => goToPage(currentPage + 1)}
-                            disabled={currentPage === totalPages}
-                        >
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                <polyline points="9 18 15 12 9 6" />
-                            </svg>
-                        </button>
-                    </div>
                 </div>
             )}
 

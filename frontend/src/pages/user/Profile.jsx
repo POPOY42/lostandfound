@@ -196,7 +196,6 @@ const Profile = () => {
         }
     };
 
-    // ── Password ──
     const savePassword = async () => {
         try {
             setPasswordSaving(true);

@@ -1,0 +1,332 @@
+/* ── Page ── */
+.guide-page {
+    padding: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+    font-family: 'Inter', sans-serif;
+}
+
+/* ── Hero ── */
+.guide-hero {
+    text-align: center;
+    padding: 3rem 1.5rem 2.5rem;
+    background: linear-gradient(135deg, #534ab7, #7f77dd);
+    border-radius: 22px;
+    color: #ffffff;
+    margin-bottom: 2.5rem;
+}
+
+.guide-hero-badge {
+    display: inline-flex;
+    padding: 5px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+}
+
+.guide-hero h1 {
+    font-size: 28px;
+    font-weight: 800;
+    margin: 0 0 10px;
+}
+
+.guide-hero p {
+    font-size: 14.5px;
+    color: rgba(255, 255, 255, 0.9);
+    max-width: 520px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* ── Section shell ── */
+.guide-section {
+    margin-bottom: 2.75rem;
+}
+
+.guide-section-head {
+    margin-bottom: 20px;
+}
+
+.guide-section-head h2 {
+    font-size: 19px;
+    font-weight: 700;
+    color: #111111;
+    margin: 0 0 4px;
+}
+
+.guide-section-head p {
+    font-size: 13px;
+    color: #888888;
+    margin: 0;
+}
+
+/* ── Steps grid ── */
+.guide-steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.guide-step-card {
+    position: relative;
+    background: #ffffff;
+    border: 0.5px solid rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+    padding: 22px 20px;
+    transition: box-shadow 0.2s, transform 0.15s;
+}
+
+.guide-step-card:hover {
+    box-shadow: 0 8px 24px rgba(17, 17, 17, 0.08);
+    transform: translateY(-2px);
+}
+
+.guide-step-number {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #f4f3fc;
+    color: #534ab7;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.guide-step-icon {
+    font-size: 26px;
+    margin-bottom: 12px;
+}
+
+.guide-step-card h3 {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: #111111;
+    margin: 0 0 8px;
+}
+
+.guide-step-card p {
+    font-size: 12.5px;
+    color: #6b6b76;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ── Tips grid ── */
+.guide-tips-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.guide-tip-card {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: #f9f8ff;
+    border: 1px solid #ece9fb;
+    border-radius: 14px;
+    padding: 18px 20px;
+}
+
+.guide-tip-icon {
+    font-size: 22px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.guide-tip-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111111;
+    margin: 0 0 4px;
+}
+
+.guide-tip-card p {
+    font-size: 12.5px;
+    color: #6b6b76;
+    line-height: 1.55;
+    margin: 0;
+}
+
+/* ── Status legend ── */
+.guide-status-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.guide-status-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #ffffff;
+    border: 0.5px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    padding: 14px 16px;
+}
+
+.guide-status-row p {
+    font-size: 12.5px;
+    color: #6b6b76;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.guide-status-pill {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.guide-status-pill.pending {
+    background: #fff7ed;
+    color: #ea580c;
+}
+
+.guide-status-pill.approved {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.guide-status-pill.rejected {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.guide-status-pill.claimed {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+/* ── FAQ ── */
+.guide-faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.guide-faq-item {
+    background: #ffffff;
+    border: 0.5px solid rgba(0, 0, 0, 0.08);
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.guide-faq-item.open {
+    border-color: #d6d4f0;
+}
+
+.guide-faq-question {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    background: none;
+    border: none;
+    padding: 16px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #111111;
+    font-family: 'Inter', sans-serif;
+    text-align: left;
+    cursor: pointer;
+}
+
+.guide-faq-chevron {
+    flex-shrink: 0;
+    color: #9a97c2;
+    transition: transform 0.2s;
+}
+
+.guide-faq-item.open .guide-faq-chevron {
+    transform: rotate(180deg);
+    color: #534ab7;
+}
+
+.guide-faq-answer {
+    padding: 0 20px 18px;
+    font-size: 13px;
+    color: #6b6b76;
+    line-height: 1.65;
+    margin: 0;
+}
+
+/* ── Footer card ── */
+.guide-footer-card {
+    text-align: center;
+    background: #f9f8ff;
+    border: 1px solid #ece9fb;
+    border-radius: 18px;
+    padding: 2.5rem 1.5rem;
+}
+
+.guide-footer-card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111111;
+    margin: 0 0 8px;
+}
+
+.guide-footer-card p {
+    font-size: 13px;
+    color: #6b6b76;
+    max-width: 420px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+    .guide-steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .guide-tips-grid,
+    .guide-status-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 560px) {
+    .guide-page {
+        padding: 1.25rem;
+    }
+
+    .guide-hero {
+        padding: 2.25rem 1.25rem;
+    }
+
+    .guide-hero h1 {
+        font-size: 22px;
+    }
+
+    .guide-steps-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .guide-tip-card {
+        flex-direction: column;
+    }
+
+    .guide-status-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
