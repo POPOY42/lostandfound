@@ -365,7 +365,6 @@
 
 /* -----------------------------LOST ITEMMMMMMMMMMMMMMM--------------------------------*/
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
 /* ── Page ── */
 .user-items-page {
     padding: 2rem;
@@ -577,38 +576,6 @@
 
 .own-post-btn:hover {
     background: #f3f2fa;
-}
-
-/* ── Status pill ── */
-.user-status-pill {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 6px 12px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: capitalize;
-}
-
-.user-status-pill.pending {
-    background: #fff7ed;
-    color: #ea580c;
-}
-
-.user-status-pill.approved {
-    background: #ecfdf5;
-    color: #059669;
-}
-
-.user-status-pill.rejected {
-    background: #fef2f2;
-    color: #dc2626;
-}
-
-.user-status-pill.claimed {
-    background: #eff6ff;
-    color: #2563eb;
 }
 
 /* ── Pagination ── */

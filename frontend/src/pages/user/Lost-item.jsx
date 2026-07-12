@@ -30,15 +30,7 @@ const LostItems = () => {
     const [errors, setErrors] = useState({});
     const [selectedImage, setSelectedImage] = useState(null);
     const [selectedItem, setSelectedItem] = useState(null);
-    const [itemToClaim, setItemToClaim] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-
-    const [showVerificationModal, setShowVerificationModal] = useState(false);
-    const [ownershipDetails, setOwnershipDetails] = useState("");
-    const [verificationError, setVerificationError] = useState("");
-    const [myClaims, setMyClaims] = useState({});
-
-    const [claimError, setClaimError] = useState("");
 
     const user = JSON.parse(localStorage.getItem("user"));
 
@@ -81,51 +73,8 @@ const LostItems = () => {
         }
     };
 
-    const fetchMyClaims = async () => {
-        if (!user?._id) return;
-        try {
-            const response = await fetch(
-                `http://localhost:5000/api/claim-request?claimedBy=${user._id}`
-            );
-            const data = await response.json();
-
-            if (!Array.isArray(data)) {
-                console.warn("Expected an array from /api/claim-request, got:", data);
-                return;
-            }
-
-            const map = {};
-            data.forEach((claim) => {
-                // The item reference may come back under different names
-                // depending on how the backend populates it. Try each in order.
-                const rawItemRef = claim.itemId ?? claim.item ?? null;
-                const itemId =
-                    typeof rawItemRef === "object" ? rawItemRef?._id : rawItemRef;
-
-                // Some backends may return every claim instead of filtering by
-                // claimedBy - if so, skip claims that aren't the current user's.
-                const rawUserRef = claim.claimedBy ?? claim.claimant ?? null;
-                const claimUserId =
-                    typeof rawUserRef === "object" ? rawUserRef?._id : rawUserRef;
-                if (claimUserId && claimUserId !== user._id) return;
-
-                if (!itemId) {
-                    console.warn("Claim is missing a recognizable item reference:", claim);
-                    return;
-                }
-
-                if (!map[itemId]) map[itemId] = claim;
-            });
-
-            setMyClaims(map);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
     useEffect(() => {
         fetchItems();
-        fetchMyClaims();
     }, []);
 
     // Keep currentPage valid whenever the item list changes size
@@ -168,98 +117,6 @@ const LostItems = () => {
             }
         } catch (error) {
             console.error(error);
-        }
-    };
-
-    // Returns the current claim (if any) the logged-in user has on this item
-    const getExistingClaim = (item) => myClaims[item._id];
-
-    // A user cannot open the claim flow again while a claim is pending/approved/claimed
-    const hasActiveClaim = (item) => {
-        const claim = getExistingClaim(item);
-        return !!claim && ["pending", "approved", "claimed"].includes(claim.status);
-    };
-
-    // Entry point for the "Claim" button. Guards against opening the claim
-    // flow twice for the same item while a previous request is still active.
-    const startClaimFlow = (item) => {
-        if (hasActiveClaim(item)) {
-            setClaimError("You already claimed this item. Please wait for the admin to approve your request.");
-            return;
-        }
-        setClaimError("");
-        setItemToClaim(item);
-    };
-
-    const proceedToVerification = () => {
-        setShowVerificationModal(true);
-    };
-
-    const closeClaimFlow = () => {
-        setItemToClaim(null);
-        setShowVerificationModal(false);
-        setOwnershipDetails("");
-        setVerificationError("");
-        setClaimError("");
-    };
-
-    const handleSubmitVerification = async () => {
-        if (!ownershipDetails.trim()) {
-            setVerificationError(
-                "Please describe at least one detail only the owner would know."
-            );
-            return;
-        }
-
-        if (!itemToClaim) return;
-
-        // Safety net: if a claim somehow became active while this modal was
-        // open (e.g. submitted from another tab), block the duplicate submit.
-        if (hasActiveClaim(itemToClaim)) {
-            setClaimError("You already claimed this item. Please wait for the admin to approve your request.");
-            return;
-        }
-
-        try {
-            const response = await fetch(
-                "http://localhost:5000/api/claim-request",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        itemId: itemToClaim._id,
-                        claimedBy: user._id,
-                        ownershipDetails: ownershipDetails.trim()
-                    })
-                }
-            );
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                setClaimError(data.message);
-                return;
-            }
-
-            // Optimistically mark this item as having a pending claim right away,
-            // so the button updates instantly instead of waiting on the next
-            // fetchMyClaims() round trip (this is what allowed double-claiming).
-            const newClaim = data.claim || data;
-            setMyClaims((prev) => ({
-                ...prev,
-                [itemToClaim._id]: newClaim
-            }));
-
-            // Re-sync with the backend in the background to stay accurate.
-            fetchMyClaims();
-
-            closeClaimFlow();
-
-        } catch (error) {
-            console.error(error);
-            setClaimError("Something went wrong. Please try again.");
         }
     };
 
@@ -308,63 +165,6 @@ const LostItems = () => {
         return `${cap(reportedBy.name)} ${cap(reportedBy.surname)}`.trim();
     };
 
-    // reportedBy can come back as a populated object or a plain id string
-    const isOwnItem = (item) => {
-        if (!item?.reportedBy || !user?._id) return false;
-        const reporterId =
-            typeof item.reportedBy === "object" ? item.reportedBy._id : item.reportedBy;
-        return reporterId === user._id;
-    };
-
-    // Renders the Claim / Claim Pending / Claimed button for a given item,
-    // based on the current user's claim (if any) on that item.
-    const renderClaimButton = (item, variant = "") => {
-        if (isOwnItem(item)) {
-            return (
-                <button className={`claim-btn own-post-btn ${variant}`} disabled>
-                    Your Post
-                </button>
-            );
-        }
-
-        const claim = getExistingClaim(item);
-
-        if (claim?.status === "pending") {
-            return (
-                <button className={`claim-btn claim-pending-btn ${variant}`} disabled>
-                    Claim Pending
-                </button>
-            );
-        }
-
-        if (claim?.status === "approved" || claim?.status === "claimed") {
-            return (
-                <button className={`claim-btn claimed-btn ${variant}`} disabled>
-                    Claimed
-                </button>
-            );
-        }
-
-        // No claim yet, or a previous claim was rejected -> allow (re)claiming
-        return (
-            <button className={`claim-btn ${variant}`} onClick={() => startClaimFlow(item)}>
-                Claim
-            </button>
-        );
-    };
-
-    const renderRejectedNote = (item) => {
-        const claim = getExistingClaim(item);
-        if (claim?.status !== "rejected") return null;
-        return (
-            <div className="claim-rejected-note">
-                Your claim request for <strong>{item.itemName}</strong> has been rejected
-                because the information you provided could not be verified. If you believe
-                this is a mistake, you may submit another claim with more accurate details.
-            </div>
-        );
-    };
-
     return (
         <div className="user-items-page">
             <div className="user-items-head">
@@ -379,12 +179,6 @@ const LostItems = () => {
                     </button>
                 </div>
             </div>
-
-            {claimError && !itemToClaim && (
-                <div className="claim-error-banner">
-                    {claimError}
-                </div>
-            )}
 
             {items.length === 0 ? (
                 <div className="user-items-empty">No lost items reported yet.</div>
@@ -430,8 +224,6 @@ const LostItems = () => {
                                     </svg>
                                     {item.location}
                                 </div>
-
-                                {renderRejectedNote(item)}
                             </div>
 
                             <div className="user-item-card-footer">
@@ -441,7 +233,6 @@ const LostItems = () => {
                                 >
                                     View Details
                                 </button>
-                                {renderClaimButton(item)}
                             </div>
                         </div>
                     ))}
@@ -651,87 +442,6 @@ const LostItems = () => {
                                 <p>{selectedItem.description}</p>
                             </div>
                         )}
-
-                        {renderRejectedNote(selectedItem)}
-
-                        {renderClaimButton(selectedItem, "details-claim-btn")}
-                    </div>
-                </div>
-            )}
-
-            {/* Claim confirmation modal (step 1) */}
-            {itemToClaim && !showVerificationModal && (
-                <div className="claim-modal-overlay" onClick={closeClaimFlow}>
-                    <div className="claim-modal" onClick={(e) => e.stopPropagation()}>
-                        <div className="claim-modal-icon">🤝</div>
-                        <h2>Claim this item?</h2>
-                        <p>
-                            You're about to submit a claim request for{" "}
-                            <strong>{itemToClaim.itemName}</strong>. Our staff will review your
-                            request and get in touch with you.
-                        </p>
-                        <div className="claim-actions">
-                            <button
-                                className="claim-cancel-btn"
-                                onClick={closeClaimFlow}
-                            >
-                                Cancel
-                            </button>
-                            <button className="claim-confirm-btn" onClick={proceedToVerification}>
-                                Confirm Claim
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {/* Ownership verification modal (step 2) */}
-            {itemToClaim && showVerificationModal && (
-                <div className="claim-modal-overlay" onClick={closeClaimFlow}>
-                    <div className="claim-modal verification-modal" onClick={(e) => e.stopPropagation()}>
-                        <h2>Ownership Verification</h2>
-                        <p>Please describe details that only the owner would know.</p>
-
-                        <div className="verification-examples">
-                            <span className="verification-examples-label">Examples:</span>
-                            <ul>
-                                <li>Contents inside the wallet</li>
-                                <li>Color of the ID holder</li>
-                                <li>Missing zipper</li>
-                                <li>Brand</li>
-                            </ul>
-                        </div>
-
-                        <div className={`report-modal-field ${verificationError ? "has-error" : ""}`}>
-                            <textarea
-                                className="verification-textarea"
-                                placeholder="Describe details only the owner would know..."
-                                rows={5}
-                                value={ownershipDetails}
-                                onChange={(e) => {
-                                    setOwnershipDetails(e.target.value);
-                                    setVerificationError("");
-                                }}
-                            />
-                            {verificationError && (
-                                <span className="report-field-error">{verificationError}</span>
-                            )}
-
-                            {claimError && (
-                                <span className="report-field-error">
-                                    {claimError}
-                                </span>
-                            )}
-                        </div>
-
-                        <div className="claim-actions">
-                            <button className="claim-cancel-btn" onClick={closeClaimFlow}>
-                                Cancel
-                            </button>
-                            <button className="claim-confirm-btn" onClick={handleSubmitVerification}>
-                                Submit Claim
-                            </button>
-                        </div>
                     </div>
                 </div>
             )}

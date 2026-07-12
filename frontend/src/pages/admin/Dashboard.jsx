@@ -5,14 +5,23 @@ import "../../styles/dashboard.css";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-name.split(" ").map((n) => n[0]).slice(0, 2).join("").toUpperCase();
-
-const badgeClass = (type) => {
-    
-  if (type === "found") return "post-badge badge-found";
-  if (type === "claimed") return "post-badge badge-claimed";
-  return "post-badge badge-lost";
+const getInitials = (name) => {
+    if (!name) return "?";
+    return name
+        .split(" ")
+        .map((n) => n[0])
+        .slice(0, 2)
+        .join("")
+        .toUpperCase();
 };
+
+const badgeClass = (post) => {
+    if (post.status === "claimed") return "post-badge badge-claimed";
+    if (post.type === "found") return "post-badge badge-found";
+    return "post-badge badge-lost";
+};
+
+const badgeLabel = (post) => (post.status === "claimed" ? "claimed" : post.type);
 
 const Dashboard = () => {
   const [stats, setStats] = useState({ lost: 0, found: 0, claimed: 0, users: 0 });
@@ -21,7 +30,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/dashboard/stats"); 
+        const res = await fetch("http://localhost:5000/api/dashboard/stats");
         const data = await res.json();
         setStats(data);
       } catch (err) {
@@ -30,9 +39,13 @@ const Dashboard = () => {
     };
 
     const fetchRecentPosts = async () => {
-        const res = await fetch("http://localhost:5000/api/dashboard/recent-posts");
-        const data = await res.json();
-        setRecentPosts(data);
+        try {
+            const res = await fetch("http://localhost:5000/api/dashboard/recent-posts");
+            const data = await res.json();
+            setRecentPosts(Array.isArray(data) ? data : []);
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     fetchStats();
@@ -111,12 +124,11 @@ const Dashboard = () => {
           ) : (
             recentPosts.map((post) => (
               <div className="post-row" key={post._id}>
-                
                 <div className="post-info">
                   <div className="post-name">{post.reportedBy?.name || "Unknown"}</div>
                   <div className="post-desc">{post.itemName} — {post.location}</div>
                 </div>
-                <span className={badgeClass(post.type)}>{post.type}</span>
+                <span className={badgeClass(post)}>{badgeLabel(post)}</span>
               </div>
             ))
           )}

@@ -135,7 +135,6 @@ const ClaimRequest = () => {
                         <tr>
                             <th>Picture</th>
                             <th>Item</th>
-                            <th>Type</th>
                             <th>Claimant</th>
                             <th>Submitted</th>
                             <th>Status</th>
@@ -164,9 +163,6 @@ const ClaimRequest = () => {
                                 </td>
                                 <td className="item-name">
                                     {claim.item?.itemName || "Untitled item"}
-                                </td>
-                                <td className="claimant-name">
-                                    {claim.item?.type || "—"}
                                 </td>
                                 <td className="claimant-name">
                                     {claim.claimant

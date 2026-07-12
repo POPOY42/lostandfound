@@ -66,9 +66,9 @@ const login = async (req, res) => {
                 surname: user.surname,
                 username: user.username,
                 contactNumber: user.contactNumber,
-                role: user.role
+                role: user.role,
+                createdAt: user.createdAt
             }
-
         });
     }
     catch(error){
@@ -121,23 +121,100 @@ const changeUsername = async (req,res) => {
         )
 
         return res.status(200).json({
-        message: "Username updated successfully",
-        user: updatedUser
-    });
+            message: "Username updated successfully",
+            user: updatedUser
+        });
     } 
     catch (error) {
         return res.status(500).json({
             message: error.message
-    }   );
+    });
     }
 }
 
 
+const changePhoneNumber = async (req, res) => {
+    try {
+        const { userId, contactNumber } = req.body;
 
+        if (!contactNumber) {
+            return res.status(400).json({
+                message: "Contact number is required"
+            });
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { contactNumber },
+            { new: true }
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        return res.status(200).json({
+            message: "Contact number updated successfully",
+            user: updatedUser
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
+
+const changePassword = async (req, res) => {
+    try {
+        const { userId, currentPassword, newPassword } = req.body;
+
+        if (!currentPassword || !newPassword) {
+            return res.status(400).json({
+                message: "Current password and new password are required"
+            });
+        }
+
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found"
+            });
+        }
+
+        const isMatch = await bcrypt.compare(currentPassword, user.password);
+
+        if (!isMatch) {
+            return res.status(400).json({
+                message: "Current password is incorrect"
+            });
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        user.password = hashedPassword;
+        await user.save();
+
+        return res.status(200).json({
+            message: "Password updated successfully"
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message
+        });
+    }
+};
 
 
 export{register, 
        login, 
        getUsers,
-       changeUsername
+       changeUsername,
+       changePhoneNumber,
+       changePassword
 }
