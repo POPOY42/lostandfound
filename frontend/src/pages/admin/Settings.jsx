@@ -14,6 +14,7 @@ import ChangeUsernameModal from "../../components/settings/ChangeUsernameModal";
 import ChangePasswordModal from "../../components/settings/ChangePasswordModal";
 import UserGuide from "../../components/settings/UserGuide";
 import ContactSupport from  "../../components/settings/ContactSupport";
+import Developers from "../../components/settings/Developers";
 import { useState } from "react";
 
 const Settings = () => {
@@ -123,11 +124,14 @@ const Settings = () => {
                         </span>
 
                         <div className="settings-links">
-                            <a href="#" className="settings-link">
+
+                            <button
+                                className="settings-btn"
+                                onClick={() => openModal("developer")}
+                            >
                                 <HiOutlineUserGroup />
                                 Developer/s
-                            </a>
-
+                            </button>
                             <hr className="divider" />
 
                             <a href="#" className="settings-link">
@@ -150,6 +154,9 @@ const Settings = () => {
             )} 
             {activeModal === "support" && (
                 <ContactSupport onClose={closeModal}/>
+            )}
+            {activeModal === "developer" && (
+                <Developers onClose={closeModal}/>
             )}
         </div>
     );

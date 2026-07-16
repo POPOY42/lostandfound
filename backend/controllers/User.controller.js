@@ -2,40 +2,57 @@ import User from "../models/User.model.js";
 import bcrypt from "bcrypt";
 
 const register = async (req, res) => {
+    try {
+        const { name, surname, username, contactNumber, password } = req.body;
 
-    try{
-        const {name, surname, username, contactNumber, password} = req.body
-
-        const existingUser = await User.findOne({ username });
+        // Check if username or contact number already exists
+        const existingUser = await User.findOne({
+            $or: [
+                { username: username.toLowerCase() },
+                { contactNumber }
+            ]
+        });
 
         if (existingUser) {
-            return res.status(400).json({
-                message: "username already exists"
-            });
+            if (existingUser.username === username.toLowerCase()) {
+                return res.status(400).json({
+                    message: "Username already exists."
+                });
+            }
+
+            if (existingUser.contactNumber === contactNumber) {
+                return res.status(400).json({
+                    message: "Contact number already exists."
+                });
+            }
         }
 
+        // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        // Create new user
         const newUser = new User({
-                name,
-                surname,
-                username,
-                contactNumber,
-                password: hashedPassword
-            });
+            name,
+            surname,
+            username: username.toLowerCase(),
+            contactNumber,
+            password: hashedPassword
+        });
 
         await newUser.save();
 
         return res.status(201).json({
-            message: "User registered successfully"
+            success: true,
+            message: "User registered successfully."
         });
-    }
-    catch(error){
+
+    } catch (error) {
         return res.status(500).json({
+            success: false,
             message: error.message
         });
     }
-}
+};
 
 
 const login = async (req, res) => {

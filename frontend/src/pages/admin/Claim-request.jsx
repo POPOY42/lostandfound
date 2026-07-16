@@ -336,18 +336,42 @@ const ClaimRequest = () => {
 
                         {selectedClaim.status === "pending" && (
                             <div className="modal-footer">
-                                <button
-                                    className="btn btn-decline"
-                                    onClick={() => handleReject(selectedClaim._id)}
-                                >
-                                    {showRejectInput ? "Confirm decline" : "Decline claim"}
-                                </button>
-                                <button
-                                    className="btn btn-approve"
-                                    onClick={() => handleApprove(selectedClaim._id)}
-                                >
-                                    Approve claim
-                                </button>
+                                {showRejectInput ? (
+                                    <>
+                                        <button
+                                            className="btn btn-cancel"
+                                            onClick={() => {
+                                                setShowRejectInput(false);
+                                                setRejectionReason("");
+                                            }}
+                                        >
+                                            Cancel
+                                        </button>
+
+                                        <button
+                                            className="btn btn-decline"
+                                            onClick={() => handleReject(selectedClaim._id)}
+                                        >
+                                            Confirm Decline
+                                        </button>
+                                    </>
+                                ) : (
+                                    <>
+                                        <button
+                                            className="btn btn-decline"
+                                            onClick={() => setShowRejectInput(true)}
+                                        >
+                                            Decline Claim
+                                        </button>
+
+                                        <button
+                                            className="btn btn-approve"
+                                            onClick={() => handleApprove(selectedClaim._id)}
+                                        >
+                                            Approve Claim
+                                        </button>
+                                    </>
+                                )}
                             </div>
                         )}
                     </div>

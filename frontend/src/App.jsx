@@ -23,6 +23,7 @@ import UserClaimedItems from "./pages/user/Claimed-item";
 import UserMyItems from "./pages/user/My-items";
 import UserProfile from "./pages/user/Profile";
 import UserUserGuide from "./pages/user/User-guide";
+import MyClaims from "./pages/user/My-claims";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -69,6 +70,7 @@ const App = () => {
                     <Route path="user-my-items" element={<UserMyItems />} />
                     <Route path="user-profile" element={<UserProfile />} />
                     <Route path="user-guide" element={<UserUserGuide />} />
+                    <Route path="user-my-claims" element={<MyClaims />} />
                 </Route>
             </Routes>
         </BrowserRouter>

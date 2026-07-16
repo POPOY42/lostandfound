@@ -118,6 +118,45 @@ const approveClaimRequest = async (req,res) =>{
     }
 }
 
+const rejectClaimRequest = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { rejectionReason } = req.body;
+
+        const claim = await Claim.findById(id);
+
+        if (!claim) {
+            return res.status(404).json({
+                message: "Claim request not found."
+            });
+        }
+
+        // Prevent approving/rejecting an already reviewed claim
+        if (claim.status !== "pending") {
+            return res.status(400).json({
+                message: "This claim request has already been reviewed."
+            });
+        }
+
+        // Reject the claim
+        claim.status = "rejected";
+        claim.rejectionReason = rejectionReason;
+        claim.reviewedAt = new Date();
+
+        await claim.save();
+
+        return res.status(200).json({
+            message: "Claim request rejected successfully.",
+            claim
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
 const getMyClaim = async (req, res) => {
     try {
         const { claimant } = req.query;
@@ -145,8 +184,35 @@ const getMyClaim = async (req, res) => {
     }
 };
 
+
+const getMyClaims = async (req, res) => {
+    try {
+        const { claimant } = req.query;
+
+        const claims = await Claim.find({
+            claimant
+        })
+            .populate("item")
+            .sort({ createdAt: -1 });
+
+        const validClaims = claims.filter(
+            (claim) => claim.item !== null
+        );
+
+        return res.status(200).json(validClaims);
+
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message
+        });
+    }
+};
+
+
 export { createClaimRequest,
          getClaimRequests,
          approveClaimRequest,
-         getMyClaim
+         rejectClaimRequest,
+         getMyClaim,
+         getMyClaims
 };

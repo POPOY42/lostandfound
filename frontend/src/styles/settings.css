@@ -1071,3 +1071,270 @@
   margin: 0;
   line-height: 1.6;
 }
+
+
+/* DEVELOPERS ==============================================*/
+
+/* ── Modal overlay/card ── */
+.dev-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 18, 35, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    z-index: 200;
+}
+
+.dev-modal-card {
+    width: 100%;
+    max-width: 640px;
+    max-height: 88vh;
+    overflow-y: auto;
+    background: #ffffff;
+    border-radius: 20px;
+    font-family: 'Inter', sans-serif;
+    animation: dev-modal-popup 0.2s ease;
+}
+
+@keyframes dev-modal-popup {
+    from {
+        transform: scale(0.96);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.dev-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 1.75rem 1.75rem 1.25rem;
+    border-bottom: 1px solid #f4f3fc;
+}
+
+.dev-modal-header h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111111;
+    margin: 0 0 4px;
+}
+
+.dev-modal-header p {
+    font-size: 13px;
+    color: #888888;
+    margin: 0;
+}
+
+.dev-modal-close-btn {
+    flex-shrink: 0;
+    background: #f4f3fc;
+    border: none;
+    color: #888888;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 18px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.dev-modal-close-btn:hover {
+    background: #eeedfe;
+    color: #534ab7;
+}
+
+.dev-modal-body {
+    padding: 1.5rem 1.75rem 1.75rem;
+}
+
+/* ── Developer profile card ── */
+.dev-profile-card {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #f9f8ff;
+    border: 1px solid #ece9fb;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.75rem;
+}
+
+.dev-avatar {
+    flex-shrink: 0;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7f77dd, #534ab7);
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dev-profile-info h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111111;
+    margin: 0 0 6px;
+}
+
+.dev-role-badge {
+    display: inline-flex;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: #ffffff;
+    border: 1px solid #e0dff5;
+    color: #534ab7;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-bottom: 10px;
+}
+
+.dev-bio {
+    font-size: 12.5px;
+    color: #6b6b76;
+    line-height: 1.6;
+    margin: 0 0 14px;
+}
+
+.dev-socials {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.dev-social-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid #e0dff5;
+    background: #ffffff;
+    color: #534ab7;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.dev-social-link:hover {
+    background: #f4f3fc;
+    border-color: #b9b3ea;
+}
+
+/* ── Sections ── */
+.dev-section {
+    margin-bottom: 1.75rem;
+}
+
+.dev-section:last-child {
+    margin-bottom: 0;
+}
+
+.dev-section-head {
+    margin-bottom: 12px;
+}
+
+.dev-section-head h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111111;
+    margin: 0;
+}
+
+/* ── Tech stack ── */
+.dev-tech-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.dev-tech-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: #ffffff;
+    border: 0.5px solid rgba(0, 0, 0, 0.08);
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #111111;
+}
+
+.dev-tech-icon {
+    font-size: 14px;
+}
+
+/* ── Project highlights ── */
+.dev-highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.dev-highlight-card {
+    background: #ffffff;
+    border: 0.5px solid rgba(0, 0, 0, 0.08);
+    border-radius: 14px;
+    padding: 16px;
+}
+
+.dev-highlight-icon {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.dev-highlight-card h5 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #111111;
+    margin: 0 0 5px;
+}
+
+.dev-highlight-card p {
+    font-size: 12px;
+    color: #6b6b76;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 560px) {
+    .dev-modal-card {
+        max-height: 92vh;
+    }
+
+    .dev-modal-header,
+    .dev-modal-body {
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+    }
+
+    .dev-profile-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .dev-socials {
+        justify-content: center;
+    }
+
+    .dev-highlights-grid {
+        grid-template-columns: 1fr;
+    }
+}
