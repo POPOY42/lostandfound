@@ -133,11 +133,6 @@ const Settings = () => {
                                 Developer/s
                             </button>
                             <hr className="divider" />
-
-                            <a href="#" className="settings-link">
-                                <CiPen />
-                                Design Team
-                            </a>
                         </div>
                     </div>
                 </div>
