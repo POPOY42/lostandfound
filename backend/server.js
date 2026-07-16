@@ -15,7 +15,7 @@ app.use(express.json());
 
 import userRouter from "./routes/User.routes.js"
 import itemRouter from "./routes/Item.routes.js"
-import dashboardRoutes from "./routes/dashboard.routes.js";
+import dashboardRoutes from "./routes/Dashboard.routes.js";
 import claimRoutes from "./routes/Claim.routes.js";
 
 app.use(
