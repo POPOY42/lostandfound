@@ -62,7 +62,7 @@ const LostItems = () => {
 
     const fetchItems = async () => {
         try {
-            const response = await fetch("http://localhost:5000/api/item?type=lost&status=approved");
+            const response = await fetch("https://lostandfound-8afg.onrender.com/api/item?type=lost&status=approved");
             const data = await response.json();
             setItems(data);
         } catch (error) {
@@ -97,7 +97,7 @@ const LostItems = () => {
             body.append("reportedBy", user._id);
             if (formData.image) body.append("image", formData.image);
 
-            const response = await fetch("http://localhost:5000/api/item", {
+            const response = await fetch("https://lostandfound-8afg.onrender.com/api/item", {
                 method: "POST",
                 body
             });
@@ -151,12 +151,12 @@ const LostItems = () => {
                                 className="user-item-card-image-wrap"
                                 onClick={() =>
                                     item.image &&
-                                    setSelectedImage(`http://localhost:5000/${item.image}`)
+                                    setSelectedImage(`https://lostandfound-8afg.onrender.com/${item.image}`)
                                 }
                             >
                                 {item.image ? (
                                     <img
-                                        src={`http://localhost:5000/${item.image}`}
+                                        src={`https://lostandfound-8afg.onrender.com/${item.image}`}
                                         alt={item.itemName}
                                         className="user-item-card-image"
                                     />
@@ -320,7 +320,7 @@ const LostItems = () => {
 
                         {selectedItem.image ? (
                             <img
-                                src={`http://localhost:5000/${selectedItem.image}`}
+                                src={`https://lostandfound-8afg.onrender.com/${selectedItem.image}`}
                                 alt={selectedItem.itemName}
                                 className="details-modal-image"
                             />

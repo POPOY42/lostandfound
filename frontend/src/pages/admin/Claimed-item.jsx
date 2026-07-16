@@ -11,7 +11,7 @@ const ClaimedItems = () => {
 
     const fetchClaimedItems = async () => {
         try {
-            const response = await fetch("http://localhost:5000/api/item/claimed");
+            const response = await fetch("https://lostandfound-8afg.onrender.com/api/item/claimed");
             const data = await response.json();
             setItems(data);
         } catch (error) {
@@ -102,7 +102,7 @@ const ClaimedItems = () => {
                                 <td>
                                     {item.image ? (
                                         <img
-                                            src={`http://localhost:5000/${item.image}`}
+                                            src={`https://lostandfound-8afg.onrender.com/${item.image}`}
                                             alt={item.itemName}
                                             className="item-thumb"
                                         />
@@ -223,7 +223,7 @@ const ClaimedItems = () => {
                                 </p>
                                 {selectedItem.image && (
                                     <img
-                                        src={`http://localhost:5000/${selectedItem.image}`}
+                                        src={`https://lostandfound-8afg.onrender.com/${selectedItem.image}`}
                                         alt={selectedItem.itemName}
                                         className="modal-item-image"
                                     />

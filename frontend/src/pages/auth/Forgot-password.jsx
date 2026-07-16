@@ -35,7 +35,7 @@ const ForgotPassword = () => {
             setUsernameError("");
 
             const response = await fetch(
-                "http://localhost:5000/api/users/forgot-password/find-user",
+                "https://lostandfound-8afg.onrender.com/api/users/forgot-password/find-user",
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -71,7 +71,7 @@ const ForgotPassword = () => {
             setContactError("");
 
             const response = await fetch(
-                "http://localhost:5000/api/users/forgot-password/verify-contact",
+                "https://lostandfound-8afg.onrender.com/api/users/forgot-password/verify-contact",
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -110,7 +110,7 @@ const ForgotPassword = () => {
             setPasswordLoading(true);
 
             const response = await fetch(
-                "http://localhost:5000/api/users/forgot-password/reset",
+                "https://lostandfound-8afg.onrender.com/api/users/forgot-password/reset",
                 {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },

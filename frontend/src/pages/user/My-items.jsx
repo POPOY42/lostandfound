@@ -50,7 +50,7 @@ const MyItems = () => {
         try {
             setLoading(true);
             const response = await fetch(
-                `http://localhost:5000/api/item/myitems?reportedBy=${user._id}`
+                `https://lostandfound-8afg.onrender.com/api/item/myitems?reportedBy=${user._id}`
             );
             const data = await response.json();
             setItems(Array.isArray(data) ? data : []);
@@ -117,7 +117,7 @@ const MyItems = () => {
                 : "",
             image: null
         });
-        setEditImagePreview(item.image ? `http://localhost:5000/${item.image}` : null);
+        setEditImagePreview(item.image ? `https://lostandfound-8afg.onrender.com/${item.image}` : null);
         setEditErrors({});
         setSelectedItem(item);
         setIsDetailsOpen(false);
@@ -179,7 +179,7 @@ const MyItems = () => {
             }
 
             const response = await fetch(
-                `http://localhost:5000/api/item/${selectedItem._id}`,
+                `https://lostandfound-8afg.onrender.com/api/item/${selectedItem._id}`,
                 {
                     method: "PATCH",
                     body
@@ -207,7 +207,7 @@ const MyItems = () => {
         if (!deleteTarget) return;
         try {
             const response = await fetch(
-                `http://localhost:5000/api/item/${deleteTarget._id}`,
+                `https://lostandfound-8afg.onrender.com/api/item/${deleteTarget._id}`,
                 { method: "DELETE" }
             );
             if (response.ok) {
@@ -281,7 +281,7 @@ const MyItems = () => {
                                             <div className="my-item-cell">
                                                 {item.image ? (
                                                     <img
-                                                        src={`http://localhost:5000/${item.image}`}
+                                                        src={`https://lostandfound-8afg.onrender.com/${item.image}`}
                                                         alt={item.itemName}
                                                         className="my-item-thumb"
                                                     />
@@ -348,7 +348,7 @@ const MyItems = () => {
                         <div className="my-modal-body">
                             {selectedItem.image ? (
                                 <img
-                                    src={`http://localhost:5000/${selectedItem.image}`}
+                                    src={`https://lostandfound-8afg.onrender.com/${selectedItem.image}`}
                                     alt={selectedItem.itemName}
                                     className="my-modal-image"
                                 />

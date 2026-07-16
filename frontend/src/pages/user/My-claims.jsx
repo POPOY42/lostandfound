@@ -26,7 +26,7 @@ const MyClaims = () => {
         if (!user?._id) return;
         try {
             setLoading(true);
-            const response = await fetch(`http://localhost:5000/api/claim-request/my?claimant=${user._id}`)
+            const response = await fetch(`https://lostandfound-8afg.onrender.com/api/claim-request/my?claimant=${user._id}`)
             const data = await response.json();
             setClaims(Array.isArray(data) ? data : []);
         } catch (error) {
@@ -130,7 +130,7 @@ const MyClaims = () => {
                                             <div className="my-item-cell">
                                                 {item?.image ? (
                                                     <img
-                                                        src={`http://localhost:5000/${item.image}`}
+                                                        src={`https://lostandfound-8afg.onrender.com/${item.image}`}
                                                         alt={item.itemName}
                                                         className="my-item-thumb"
                                                     />
@@ -203,7 +203,7 @@ const MyClaims = () => {
                         <div className="my-modal-body">
                             {getItem(selectedClaim)?.image ? (
                                 <img
-                                    src={`http://localhost:5000/${getItem(selectedClaim).image}`}
+                                    src={`https://lostandfound-8afg.onrender.com/${getItem(selectedClaim).image}`}
                                     alt={getItem(selectedClaim).itemName}
                                     className="my-modal-image"
                                 />

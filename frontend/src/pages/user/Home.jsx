@@ -40,9 +40,9 @@ const Home = () => {
     const fetchCounts = async () => {
         try {
             const [lostRes, foundRes, claimedRes] = await Promise.all([
-                fetch("http://localhost:5000/api/item?type=lost&status=approved"),
-                fetch("http://localhost:5000/api/item?type=found&status=approved"),
-                fetch("http://localhost:5000/api/item?status=claimed")
+                fetch("https://lostandfound-8afg.onrender.com/api/item?type=lost&status=approved"),
+                fetch("https://lostandfound-8afg.onrender.com/api/item?type=found&status=approved"),
+                fetch("https://lostandfound-8afg.onrender.com/api/item?status=claimed")
             ]);
             const [lostData, foundData, claimedData] = await Promise.all([
                 lostRes.json(),
@@ -60,7 +60,7 @@ const Home = () => {
     const fetchFoundItems = async () => {
         try {
             const response = await fetch(
-                "http://localhost:5000/api/item?type=found&status=approved"
+                "https://lostandfound-8afg.onrender.com/api/item?type=found&status=approved"
             );
             const data = await response.json();
             const sorted = Array.isArray(data)
@@ -148,12 +148,12 @@ const Home = () => {
                                     className="user-item-card-image-wrap"
                                     onClick={() =>
                                         item.image &&
-                                        setSelectedImage(`http://localhost:5000/${item.image}`)
+                                        setSelectedImage(`https://lostandfound-8afg.onrender.com/${item.image}`)
                                     }
                                 >
                                     {item.image ? (
                                         <img
-                                            src={`http://localhost:5000/${item.image}`}
+                                            src={`https://lostandfound-8afg.onrender.com/${item.image}`}
                                             alt={item.itemName}
                                             className="user-item-card-image"
                                         />

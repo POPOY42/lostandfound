@@ -19,7 +19,7 @@ const ClaimRequest = () => {
 
     const fetchClaims = async () => {
         try {
-            const response = await fetch("http://localhost:5000/api/claim-request");
+            const response = await fetch("https://lostandfound-8afg.onrender.com/api/claim-request");
             const data = await response.json();
             setClaims(data);
         } catch (error) {
@@ -52,7 +52,7 @@ const ClaimRequest = () => {
 
     const handleApprove = async (id) => {
         try {
-            await fetch(`http://localhost:5000/api/claim-request/${id}/approve`, {
+            await fetch(`https://lostandfound-8afg.onrender.com/api/claim-request/${id}/approve`, {
                 method: "PATCH"
             });
             await fetchClaims();
@@ -71,7 +71,7 @@ const ClaimRequest = () => {
         if (!rejectionReason.trim()) return;
 
         try {
-            await fetch(`http://localhost:5000/api/claim-request/${id}/reject`, {
+            await fetch(`https://lostandfound-8afg.onrender.com/api/claim-request/${id}/reject`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ rejectionReason })
@@ -147,7 +147,7 @@ const ClaimRequest = () => {
                                 <td>
                                     {claim.item?.image ? (
                                         <img
-                                            src={`http://localhost:5000/${claim.item.image}`}
+                                            src={`https://lostandfound-8afg.onrender.com/${claim.item.image}`}
                                             alt={claim.item?.itemName || "Item"}
                                             className="item-thumb"
                                         />
@@ -277,7 +277,7 @@ const ClaimRequest = () => {
                                 </p>
                                 {selectedClaim.item?.image && (
                                     <img
-                                        src={`http://localhost:5000/${selectedClaim.item.image}`}
+                                        src={`https://lostandfound-8afg.onrender.com/${selectedClaim.item.image}`}
                                         alt={selectedClaim.item.itemName}
                                         className="modal-item-image"
                                     />

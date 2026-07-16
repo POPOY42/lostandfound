@@ -19,7 +19,7 @@ const ClaimedItems = () => {
         try {
             setLoading(true);
             const response = await fetch(
-                `http://localhost:5000/api/claim-request/myclaimed?claimant=${user._id}`
+                `https://lostandfound-8afg.onrender.com/api/claim-request/myclaimed?claimant=${user._id}`
             );
             const data = await response.json();
             console.log(data)
@@ -233,7 +233,7 @@ const ClaimedItems = () => {
                                         <div className="myclaimed-item-cell">
                                             {item.image ? (
                                                 <img
-                                                    src={`http://localhost:5000/${item.image}`}
+                                                    src={`https://lostandfound-8afg.onrender.com/${item.image}`}
                                                     alt={item.itemName}
                                                     className="myclaimed-item-thumb"
                                                 />

@@ -31,7 +31,7 @@ const ChangeUsernameModal = ({ onClose , currentUsername}) => {
         const user = JSON.parse(localStorage.getItem("user"))
         
         console.log(user)
-        const response = await fetch("http://localhost:5000/api/users/username", {
+        const response = await fetch("https://lostandfound-8afg.onrender.com/api/users/username", {
             method : "PUT",
             headers : {"Content-Type" : "application/json"},
             body: JSON.stringify({

@@ -30,7 +30,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/dashboard/stats");
+        const res = await fetch("https://lostandfound-8afg.onrender.com/api/dashboard/stats");
         const data = await res.json();
         setStats(data);
       } catch (err) {
@@ -40,7 +40,7 @@ const Dashboard = () => {
 
     const fetchRecentPosts = async () => {
         try {
-            const res = await fetch("http://localhost:5000/api/dashboard/recent-posts");
+            const res = await fetch("https://lostandfound-8afg.onrender.com/api/dashboard/recent-posts");
             const data = await res.json();
             setRecentPosts(Array.isArray(data) ? data : []);
         } catch (err) {

@@ -80,7 +80,7 @@ const FoundItems = () => {
             body.append("reportedBy", user._id);
             if (formData.image) body.append("image", formData.image);
 
-            const response = await fetch("http://localhost:5000/api/item", {
+            const response = await fetch("https://lostandfound-8afg.onrender.com/api/item", {
                 method: "POST",
                 body
             });
@@ -96,7 +96,7 @@ const FoundItems = () => {
 
     const fetchItems = async () => {
         try {
-            const response = await fetch("http://localhost:5000/api/item?type=found");
+            const response = await fetch("https://lostandfound-8afg.onrender.com/api/item?type=found");
             const data = await response.json();
             setItems(data);
         } catch (error) {
@@ -116,7 +116,7 @@ const FoundItems = () => {
 
     const handleApprove = async (id) => {
         try {
-            await fetch(`http://localhost:5000/api/item/${id}/approve`, {
+            await fetch(`https://lostandfound-8afg.onrender.com/api/item/${id}/approve`, {
                 method: "PATCH"
             });
             fetchItems();
@@ -127,7 +127,7 @@ const FoundItems = () => {
 
     const handleReject = async (id) => {
         try {
-            await fetch(`http://localhost:5000/api/item/${id}/reject`, {
+            await fetch(`https://lostandfound-8afg.onrender.com/api/item/${id}/reject`, {
                 method: "PATCH"
             });
             fetchItems();
@@ -204,11 +204,11 @@ const FoundItems = () => {
                                 <td>
                                     {item.image ? (
                                         <img
-                                            src={`http://localhost:5000/${item.image}`}
+                                            src={`https://lostandfound-8afg.onrender.com/${item.image}`}
                                             alt={item.itemName}
                                             className="item-thumb"
                                             onClick={() =>
-                                                setSelectedImage(`http://localhost:5000/${item.image}`)
+                                                setSelectedImage(`https://lostandfound-8afg.onrender.com/${item.image}`)
                                             }
                                         />
                                     ) : (

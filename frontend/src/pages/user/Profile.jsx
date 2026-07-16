@@ -47,7 +47,7 @@ const Profile = () => {
         if (!storedUser?._id) return;
         try {
             setLoading(true);
-            const response = await fetch(`http://localhost:5000/api/users/${storedUser._id}`);
+            const response = await fetch(`https://lostandfound-8afg.onrender.com/api/users/${storedUser._id}`);
             const data = await response.json();
             if (response.ok) {
                 setUser(data);
@@ -128,7 +128,7 @@ const Profile = () => {
             setUsernameSaving(true);
             setUsernameMessage("");
 
-            const response = await fetch("http://localhost:5000/api/users/username", {
+            const response = await fetch("https://lostandfound-8afg.onrender.com/api/users/username", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -165,7 +165,7 @@ const Profile = () => {
             setPhoneSaving(true);
             setPhoneMessage("");
 
-            const response = await fetch("http://localhost:5000/api/users/contact-number", {
+            const response = await fetch("https://lostandfound-8afg.onrender.com/api/users/contact-number", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -201,7 +201,7 @@ const Profile = () => {
             setPasswordSaving(true);
             setPasswordMessage("");
 
-            const response = await fetch("http://localhost:5000/api/users/password", {
+            const response = await fetch("https://lostandfound-8afg.onrender.com/api/users/password", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
