@@ -2,7 +2,7 @@ import express from "express";
 import {
     getDashboardStats,
     getRecentPosts
-} from "../controllers/dashboard.controller.js";
+} from "../controllers/Dashboard.controller.js";
 
 const router = express.Router();
 
